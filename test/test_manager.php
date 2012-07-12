@@ -12,6 +12,5 @@ class Home extends Manager
     }
 }
 
-$home = new Home();
-$home->run();
+MoonDragon::run(new Home());
 
