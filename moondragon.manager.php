@@ -1,7 +1,6 @@
 <?php
 
-require_once 'moondragon.core.php';
-
+assert("defined('MOONDRAGON_PATH')");
 
 abstract class Manager {
     public abstract function index();
