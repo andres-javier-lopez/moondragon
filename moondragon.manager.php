@@ -2,10 +2,5 @@
 
 assert("defined('MOONDRAGON_PATH')");
 
-abstract class Manager {
-    public abstract function index();
-
-    public function run() {
-        $this->index();
-    }
-}
+require_once 'include/manager/exceptions.php';
+require_once 'include/manager/class.manager.php';

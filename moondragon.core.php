@@ -6,4 +6,4 @@ if(defined('MOONDRAGON_PATH')) {
 
 assert("defined('MOONDRAGON_PATH')");
 
-
+require_once 'include/core/exceptions.php';
