@@ -4,4 +4,4 @@
 
 class ManagerException extends MoonDragonException {}
 
-class TaskException extends ManagerException {}
+class TaskException extends Status404Exception {}
