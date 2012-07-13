@@ -9,3 +9,7 @@ assert("defined('MOONDRAGON_PATH')");
 require_once 'include/core/exceptions.php';
 require_once 'include/core/interfaces.php';
 require_once 'include/core/class.moondragon.php';
+
+// Error Control
+
+assert_options(ASSERT_BAIL, true);

@@ -1,7 +1,7 @@
 <?php
 
 define('MOONDRAGON_PATH', '../');
-define('CLEAN_URL', false);
+define('CLEAN_URL', true);
 require_once MOONDRAGON_PATH.'moondragon.core.php';
 
 require_once 'moondragon.manager.php';
@@ -14,6 +14,10 @@ class Home extends Manager
     
     public function hola() {
     	echo 'definiendo tarea hola';
+    }
+    
+    public function redireccion() {
+    	$this->doTask('hola');
     }
 }
 

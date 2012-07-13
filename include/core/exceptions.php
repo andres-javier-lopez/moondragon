@@ -10,3 +10,5 @@ class Status404Exception extends MoonDragonException {
 		echo '<p>'.$this->getMessage().'</p>';
 	}	
 }
+
+class HeadersException extends MoonDragonException {}

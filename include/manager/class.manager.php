@@ -4,9 +4,12 @@ abstract class Manager implements Runnable{
 	
 	protected $call = array();
 	
-	protected $match_url = '';
+	protected $manager_url = '';
 	
+	protected $match_url = '';
+		
 	public function __construct($match_url = '') {
+		$this->manager_url = $match_url;
 		$this->match_url = '/'.str_replace('/', '\/', $match_url).'(\/.*)?/i';
 	}
 	
@@ -19,6 +22,34 @@ abstract class Manager implements Runnable{
     
     public function __call($method, $params) {
     	throw new TaskException();
+    }
+    
+    protected function doTask($task) {
+    	if(defined('CLEAN_URL') && CLEAN_URL == true) {
+    		assert('CLEAN_URL');
+    		if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') {
+    			$protocol = 'https://';
+    		}
+    		else {
+    			$protocol = 'http://';
+    		}
+    		assert(isset($_SERVER['HTTP_HOST']));
+    		$redirection = $_SERVER['HTTP_HOST'].'/'.$this->manager_url.'/'.$task;
+    		$redirection = $protocol.str_replace('//', '/', $redirection);
+    	}
+    	else if(isset($_SERVER['PATH_INFO'])){
+    		assert('!CLEAN_URL');
+    		$dir = str_replace($_SERVER['PATH_INFO'], '', $_SERVER['PHP_SELF']);
+    		$redirection = $dir.'/'.$task;
+    		$redirection = str_replace('//', '/', $redirection);
+    	}
+    	else {
+    		assert('!CLEAN_URL && !isset($_SERVER["PATH_INFO"])');
+    		$redirection = '?task='.$task;
+    	}
+    	
+    	assert('isset($redirection) && $redirection != ""');
+    	MoonDragon::redirect($redirection);
     }
     
     protected function getTask() {
