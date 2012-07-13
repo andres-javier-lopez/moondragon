@@ -1,7 +1,5 @@
 <?php
 
-define('CLEAN_URL', true);
-
 require_once '../moondragon.manager.php';
 
 class Home extends Manager

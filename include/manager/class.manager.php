@@ -7,15 +7,24 @@ abstract class Manager implements Runnable{
 	protected $manager_url = '';
 	
 	protected $match_url = '';
+	
+	private $ready = false;
 		
 	public function __construct($match_url = '') {
-		$this->manager_url = $match_url;
-		$this->match_url = '/'.str_replace('/', '\/', $match_url).'(\/.*)?/i';
+		$this->ready = true;
+		if($match_url != '') {
+			if(!defined('CLEAN_URL')) {
+				define('CLEAN_URL', true);
+			}
+			$this->manager_url = $match_url;
+			$this->match_url = '/'.str_replace('/', '\/', $match_url).'(\/.*)?/i';
+		}
 	}
 	
     public abstract function index();
 
     public function run() {
+    	assert('$this->ready; /* Run default constructor */');
     	$task = $this->getTask();
         $this->$task();
     }
@@ -71,6 +80,9 @@ abstract class Manager implements Runnable{
     					}
     					assert('$matches[1] == "/" || $task != ""');    					
     				}
+    			}
+    			else {
+    				throw new ManagerException();
     			}
     		}
     	}
