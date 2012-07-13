@@ -1,11 +1,11 @@
 <?php
 
 require_once '../moondragon.manager.php';
-
+header('Content-Type: text/html; charset=utf-8');
 class Home extends Manager
 {
     public function index() {
-        echo 'Hola Mundo!';
+        echo _('¡Hola Mundo!');
     }
     
     public function hola() {

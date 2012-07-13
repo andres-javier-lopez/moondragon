@@ -73,12 +73,15 @@ abstract class Manager implements Runnable{
     				if(isset($matches[1])){
     					$pos = strpos($matches[1], '?');
     					if($pos !== false) {
-    						$task = $this->loadParams(substr($matches[1], 0, $pos));
+    						$string = substr($matches[1], 0, $pos);
+    						$task = $this->loadParams($string);
+    						assert('$string == "/" || $task != ""');
     					}
     					else {
     						$task = $this->loadParams($matches[1]);
+    						assert('$matches[1] == "/" || $task != ""');
     					}
-    					assert('$matches[1] == "/" || $task != ""');    					
+    					   					
     				}
     			}
     			else {
