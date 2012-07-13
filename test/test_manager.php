@@ -1,8 +1,7 @@
 <?php
 
-define('MOONDRAGON_PATH', '../');
 define('CLEAN_URL', true);
-require_once MOONDRAGON_PATH.'moondragon.core.php';
+require_once '../moondragon.core.php';
 
 require_once 'moondragon.manager.php';
 
