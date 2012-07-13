@@ -1,6 +1,7 @@
 <?php
 
 define('MOONDRAGON_PATH', '../');
+define('CLEAN_URL', false);
 require_once MOONDRAGON_PATH.'moondragon.core.php';
 
 require_once 'moondragon.manager.php';
@@ -16,5 +17,5 @@ class Home extends Manager
     }
 }
 
-MoonDragon::run(new Home());
+MoonDragon::run(new Home('moondragon4.0/test/test_manager.php'));
 
