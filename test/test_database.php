@@ -12,7 +12,7 @@ try {
 	$result = $query->getResult();
 }
 catch(QueryException $e) {
-	$result = new Result(DB_EMPTY_RESULT);
+	$result = new DBResult(DB_EMPTY_RESULT);
 }
 
 
