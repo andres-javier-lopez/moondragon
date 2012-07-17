@@ -9,3 +9,6 @@ assert("defined('MOONDRAGON_PATH')");
 
 require_once 'moondragon.core.php';
 
+require_once 'include/render/exceptions.php';
+require_once 'include/render/class.vars.php';
+require_once 'include/render/class.template.php';

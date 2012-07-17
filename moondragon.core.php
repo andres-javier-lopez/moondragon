@@ -11,6 +11,7 @@ require_once 'include/core/locale.php';
 require_once 'include/core/exceptions.php';
 require_once 'include/core/interfaces.php';
 require_once 'include/core/class.moondragon.php';
+require_once 'include/core/class.buffer.php';
 
 // Error Control
 
