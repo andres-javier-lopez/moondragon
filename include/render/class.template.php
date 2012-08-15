@@ -48,10 +48,10 @@ class Template
 	 * @param boolean $page Determina si la plantilla es una página, por defecto es falso
 	 * @return void
 	 */
-	public function __construct( $template = '')
+	public function __construct( $template = '', $page = false )
 	{
 		if($template != '') {
-			$this->setTemplate( $template );
+			$this->setTemplate( $template, $page );
 		}
 	}
 
@@ -70,7 +70,7 @@ class Template
 	 * @param boolean $page Determina si la plantilla es una página, por defecto es falsa
 	 * @return void
 	 */
-	public function setTemplate( $template )
+	public function setTemplate( $template, $page = false )
 	{
 		$found = false;
 		
@@ -96,7 +96,7 @@ class Template
 			$this->page = true;
 		}
 		else {
-			$this->page = false;
+			$this->page = $page;
 		}
 		$this->content = '';
 	}
@@ -197,9 +197,9 @@ class Template
 	 * @return string
 	 * @throws TemplateException
 	 */
-	public static function load( $template, $vars = array())
+	public static function load( $template, $vars = array(), $page = false)
 	{
-		$tpl = new self( $template );
+		$tpl = new self( $template, $page );
 		$vars_array = array_merge(  Vars::getVars(), $vars );
 		$tpl->setVars( $vars_array );
 		return $tpl->show();
