@@ -11,5 +11,5 @@ require_once 'moondragon.core.php';
 
 require_once 'include/database/class.dbconnection.php';
 require_once 'include/database/class.dbmanager.php';
-require_once 'include/database/class.dbquery.php';
-require_once 'include/database/class.dbresult.php';
+//require_once 'include/database/class.dbquery.php';
+//require_once 'include/database/class.dbresult.php';
