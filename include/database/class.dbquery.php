@@ -20,10 +20,8 @@ class DBQuery extends DBManager{
                 
      public function query_personalize($table,$campo,$condition) 
                 {
-         
-         $personalize= new DBManager();
-          
-         $query_person=$personalize->query("select $campo from $table where $condition");
+                   
+         $query_person=$this->query("select $campo from $table where $condition");
          
          return $query_person;
                 
