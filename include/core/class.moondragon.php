@@ -18,19 +18,7 @@ class MoonDragon
 			}
 		}
 		catch(Status404Exception $e) {
-			if(!headers_sent()) {
-				if(function_exists('http_response_code')) {
-					http_response_code(404);
-				}
-				else {
-					header('HTTP/1.0 404 Not Found');
-					header('Status: 404 Page Not Found');
-				}
-				echo $e->show404();
-			}
-			else {
-				throw new HeadersException();
-			}
+			$e->show404();
 		}		
 	}
 	
