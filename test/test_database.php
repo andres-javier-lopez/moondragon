@@ -2,22 +2,21 @@
 
 include '../moondragon.database.php';
 
-$conn = new DBConnection('mysql', 'localhost', 'root', '', 'test');
+Database::connect('mysql', 'localhost', 'root', '', 'test');
 
-$db = new DBManager($conn);
-
-$query = new $db->newQuery('SELECT %s, %s FROM `table`', array('name', 'value'));
+$db = Database::getManager();
 
 try {
-	$result = $query->getResult();
+	$result = $db->query('SELECT * FROM table1');
 }
 catch(QueryException $e) {
-	$result = new DBResult(DB_EMPTY_RESULT);
+	echo $e->getMessage();
+	//$result = new DBResult(DB_EMPTY_RESULT);
 }
 
 
-foreach($result as $row) {
-	echo $row->name.'<br/>';
+while($row = $result->fetch_object()) {
+	echo $row->name.' '.$row->value.'<br/>';
 }
 
-echo 'number of results '.$result->rowsNumber().'<br/>';
+//echo 'number of results '.$result->rowsNumber().'<br/>';
