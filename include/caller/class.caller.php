@@ -71,13 +71,31 @@ class Caller
 				curl_setopt($curl, CURLOPT_HTTPHEADER, 'Content-type: '.$this->data_type);				
 				break;
 			case PUT_CALL:
-				// TODO implementar este metodo
+				if(is_null($this->data) || is_null($this->data_type)) {
+					throw new EmptyDataException();
+				}
+				curl_setopt($curl, CURLOPT_HEADER, true);
+				curl_setopt($curl, CURLOPT_PUT, true);
+				curl_setopt($curl, CURLOPT_HTTPHEADER, 'Content-type: '.$this->data_type);
+								
+				/** use a max of 256KB of RAM before going to disk */
+				$fp = fopen('php://temp/maxmemory:256000', 'w');
+				if (!$fp) {
+					throw new CallerException(_('No se pudo abrir archivo temporal'));
+				}
+				fwrite($fp, $this->data);
+				fseek($fp, 0);
+				
+				curl_setopt($ch, CURLOPT_BINARYTRANSFER, true);
+				curl_setopt($ch, CURLOPT_INFILE, $fp); // file pointer
+				curl_setopt($ch, CURLOPT_INFILESIZE, strlen($this->data));
 				break;
 			case DELETE_CALL:
-				// TODO implementar este metodo
+				curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'DELETE');
 				break;
 			default:
-				die(_('Error incomprensible, esto no debería de suceder bajo ninguna circunstancia'));
+				assert('false; // Esto NO NO NO');
+				throw CallerException(_('Error incomprensible, esto no debería de suceder bajo ninguna circunstancia'));
 		}
 		
 		$result = curl_exec($curl);
