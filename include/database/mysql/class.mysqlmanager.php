@@ -153,6 +153,10 @@ class MySQLManager implements DBManager
 		return new MySQLResult(NULL);
 	}
 	
+	public function getQuery($query, $params = array()) {
+		return new MySQLQuery($this, $query, $params);
+	}
+	
 	/**
 	 * Muestra el mensaje de error de mysql
 	 * @return string

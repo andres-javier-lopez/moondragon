@@ -32,6 +32,8 @@ Interface DBManager
 	public function evalSQL($value);
 	
 	public function getEmptyResult();
+	
+	public function getQuery($query, $params);
 }
 
 Interface DBResult extends Iterator
@@ -45,5 +47,17 @@ Interface DBResult extends Iterator
 
 Interface DBQuery
 {
+	public function __construct($manager, $query, $params);
 	
+	public function setQuery($query);
+	
+	public function addParam($param);
+	
+	public function addParams($params, $replace);
+	
+	public function exec();
+	
+	public function getResult();
+	
+	public function clearResult();
 }
