@@ -34,7 +34,7 @@ class MySQLManager implements DBManager
 			}
 
 			//TODO  El resultado debe de ser un nuevo objeto result
-			return $result;
+			return new MySQLResult($result);
 		}
 
 		else
@@ -67,7 +67,7 @@ class MySQLManager implements DBManager
 			// Utilizar el nuevo objeto result
 			// Evaluar que pasaría cuando la query no devuelve un resultado
 			// Considerar un objeto multiresult
-			$result[] = $msyqli->store_result();
+			$result[] = new MySQLResult($msyqli->store_result());
 		}while($msyqli->next_result());
 
 		if($msyqli->errno)
@@ -129,6 +129,24 @@ class MySQLManager implements DBManager
 	public function insertId()
 	{
 		return $this->connection->getConnection()->insert_id;
+	}
+	
+	/**
+	 * Evalúa los valores a ingresar en las sentencias SQL
+	 * @param string $value
+	 * @return string
+	 */
+	public function evalSQL( $value )
+	{
+		if ( get_magic_quotes_gpc() )
+		{
+			stripslashes( $value );
+		}
+	
+		$this->connection->checkConnection();
+		$value = $this->connection->getConnection()->real_escape_string( $value );
+	
+		return $value;
 	}
 	
 	/**

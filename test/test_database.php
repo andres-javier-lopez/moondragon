@@ -11,12 +11,13 @@ try {
 }
 catch(QueryException $e) {
 	echo $e->getMessage();
+	die();
 	//$result = new DBResult(DB_EMPTY_RESULT);
 }
 
 
-while($row = $result->fetch_object()) {
+foreach($result as $row) {
 	echo $row->name.' '.$row->value.'<br/>';
 }
 
-//echo 'number of results '.$result->rowsNumber().'<br/>';
+echo 'number of results '.$result->numRows().'<br/>';

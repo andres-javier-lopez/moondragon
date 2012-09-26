@@ -28,4 +28,20 @@ Interface DBManager
 	public function showQueryHistory();
 	
 	public function insertId();
+	
+	public function evalSQL($value);
+}
+
+Interface DBResult extends Iterator
+{
+	public function fetch($type);
+	
+	public function getResult($field, $row = 0);
+	
+	public function numRows();
+}
+
+Interface DBQuery
+{
+	
 }
