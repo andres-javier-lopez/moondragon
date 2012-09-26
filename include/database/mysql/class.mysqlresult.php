@@ -18,58 +18,80 @@ class MySQLResult implements DBResult
 	
 	public function __destruct()
 	{
-		$this->result->free();
+		if($this->checkResult()) {
+			$this->result->free();
+		}
 	}
 	
 	public function fetch($type = 'object')
 	{
-		switch( $type )
-		{
-			case 'object':
-				return $this->result->fetch_object();
-			case 'row':
-				return $this->result->fetch_row();
-			case 'assoc':
-				return $this->result->fetch_assoc();
-			default:
-				throw new DatabaseException(_('Se ha enviado un parametro inválido a la función fetch'));
+		if($this->checkResult()) {
+			switch( $type )
+			{
+				case 'object':
+					return $this->result->fetch_object();
+				case 'row':
+					return $this->result->fetch_row();
+				case 'assoc':
+					return $this->result->fetch_assoc();
+				default:
+					throw new DatabaseException(_('Se ha enviado un parametro inválido a la función fetch'));
+			}
+		}
+		else {
+			throw new EmptyResultException();
 		}
 	}
 	
 	public function getResult($field, $row = 0)
 	{
-		if($row < $this->numRows())
-		{
-			$this->result->data_seek($row);
-			$data = $this->result->fetch_assoc();
-			$this->result->data_seek(0);
-		
-			if(isset($data[$field]))
+		if($this->checkResult()) {
+			if($row < $this->numRows())
 			{
-				return $data[$field];
+				$this->result->data_seek($row);
+				$data = $this->result->fetch_assoc();
+				$this->result->data_seek(0);
+			
+				if(isset($data[$field]))
+				{
+					return $data[$field];
+				}
+				else
+				{
+					throw new DatabaseException(_('El campo buscado no se encuentra en los valores devueltos'));
+				}
 			}
 			else
 			{
-				throw new DatabaseException(_('El campo buscado no se encuentra en los valores devueltos'));
+				throw new DatabaseException(_('El resultado buscado excede la cantidad de filas devueltas'));
 			}
 		}
-		else
-		{
-			throw new DatabaseException(_('El resultado buscado excede la cantidad de filas devueltas'));
+		else {
+			throw new EmptyResultException();
 		}
 	}
 	
 	public function numRows()
 	{
-		return $this->result->num_rows;
+		if($this->checkResult()) {
+			return $this->result->num_rows;
+		}
+		else {
+			throw new EmptyResultException();
+		}
 	}
 	
 	public function rewind()
 	{
-		$this->position = 0;
-		$this->valid = true;
-		$this->result->data_seek(0);
-		if(!($this->current = $this->result->fetch_object())) {
+		if($this->checkResult()) {
+			$this->position = 0;
+			$this->valid = true;
+			$this->result->data_seek(0);
+			if(!($this->current = $this->result->fetch_object())) {
+				$this->valid = false;
+			}
+		}
+		else {
 			$this->valid = false;
 		}
 	}
@@ -86,14 +108,25 @@ class MySQLResult implements DBResult
 	
 	public function next()
 	{
-		$this->position++;
-		if(!($this->current = $this->result->fetch_object())) {
-			$this->valid = false;
+		if($this->checkResult()) {
+			$this->position++;
+			if(!($this->current = $this->result->fetch_object())) {
+				$this->valid = false;
+			}
 		}
 	}
 	
 	public function valid()
 	{
 		return $this->valid;
+	}
+	
+	protected function checkResult() {
+		if(!is_null($this->result)) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 }

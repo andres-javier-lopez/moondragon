@@ -149,6 +149,10 @@ class MySQLManager implements DBManager
 		return $value;
 	}
 	
+	public function getEmptyResult() {
+		return new MySQLResult(NULL);
+	}
+	
 	/**
 	 * Muestra el mensaje de error de mysql
 	 * @return string

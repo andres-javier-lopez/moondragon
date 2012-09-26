@@ -30,6 +30,8 @@ Interface DBManager
 	public function insertId();
 	
 	public function evalSQL($value);
+	
+	public function getEmptyResult();
 }
 
 Interface DBResult extends Iterator
