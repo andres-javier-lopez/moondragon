@@ -157,7 +157,7 @@ class MySQLManager implements DBManager
 		return new MySQLQuery($this, $query, $params);
 	}
 	
-	public function getModel($config) {
+	public function getModel($config = array()) {
 		return new Model($this, $config);
 	}
 	

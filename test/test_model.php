@@ -95,22 +95,23 @@ echo '</pre>';
 // Create another Model
 $new_model = $db->getModel();
 
-$new_model->table = 'table';
-$new_model->fields = array('name');
+$new_model->setTable('table1');
+$new_model->setFields(array('name'));
 
 // Insert a row to the model
 $dataset = $new_model->getDataset();
 $dataset->name = 'hello world!';
 
 try {
-	$id = $new_model->insert($dataset);
+	$id = $new_model->create($dataset);
 }
-catch(InsertException $e) {
+catch(CreateException $e) {
+	echo $e->getMessage();
 	$id = 0;
 }
 
 // Update a row in the model
-$dataset = $new_model->getDataset($id);
+$dataset = $new_model->getData($id);
 $dataset->name = 'Hola Mundo!';
 
 try {
@@ -121,13 +122,19 @@ catch (UpdateException $e) {}
 try {
 	$data = $new_model->getData($id);
 }
-catch(SelectException $e) {
-	$data = $new_model->getData(EMTPY_DATA);
+catch(ReadException $e) {
+	$data = new stdClass();
+	$data->name = '';
 }
 echo $data->name.'<br/>';
 
-// Delete all values
+// El borrado másivo se trabajará después
 try {
-	$new_model->delete(ALL_ROWS);
+	$new_model->delete($id);
 }
 catch(DeleteException $e) {}
+
+echo '<pre>';
+echo $db->showQueryHistory();
+echo '</pre>';
+

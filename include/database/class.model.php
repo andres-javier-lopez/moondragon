@@ -116,6 +116,10 @@ class Reader extends TableData
 		$this->order = $order;
 	}
 	
+	public function setWhere($where) {
+		// Esta esta en desarrollo
+	}
+	
 	public function getRows() {
 		// En primera instancia no utilizamos joins
 		// El límite también esta desactivado porque aún no se ha implementado en el driver
@@ -162,8 +166,7 @@ class Dataset
 	 */
 	public function getColValues()
 	{
-		return $this->data;
-		//return array_map(array($this->manager, 'evalSQL'), $this->data);
+		return array_map(array($this->manager, 'evalSQL'), $this->data);
 	}
 	
 	/**
@@ -251,6 +254,11 @@ class Model extends TableData
 		return $id;
 	}
 	
+	public function read() {
+		// Este es por si acaso
+		return $this->getReader()->getRows();
+	}
+	
 	
 	/**
 	 * Devuelve un solo registro de la tabla con el id especificado
@@ -283,10 +291,43 @@ class Model extends TableData
 			$values[$field] = $data->$field;
 		}
 		$dataset = $this->getDataset($values);
-		$id_field = $this->getPrimary();
-		$dataset->$id_field = $id;
+		// Es mejor no incluir la llave primaria aquí
+		// $id_field = $this->getPrimary();
+		// $dataset->$id_field = $id;
 		
 		return $dataset;
+	}
+	
+	/**
+	 * Actualiza el registro en la tabla de acuerdo a los datos proporcionados en el dataset
+	 * @param Datasetobj $obj
+	 * @return void
+	 * @throws DBException
+	 */
+	public function update($id, Dataset $dataset)
+	{
+		$sql = "UPDATE `$this->table` ";
+		$data = $dataset->getColValues();
+	
+		$sep = 'SET';
+	
+		foreach($data as $col => $value)
+		{
+			if(!is_null($value))
+			{
+				$sql .= "$sep `$col` = '$value' ";
+				$sep = ',';
+			}
+		}
+	
+		$sql .= 'WHERE `'.$this->table.'`.`'.$this->getPrimary().'` = "'.$this->manager->evalSQL($id).'"';
+	
+		try {
+			$this->manager->query($sql);
+		}
+		catch(QueryException $e) {
+			throw new UpdateException($e->getMessage());
+		}
 	}
 	
 	/**
