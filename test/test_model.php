@@ -23,7 +23,7 @@ $reader->setOrder('id DESC, name DESC');
 try {
 	$rows = $reader->getRows();
 }
-catch(QueryException $e) {
+catch(ReadException $e) {
 	echo '<pre>';
 	echo $e->getMessage();
 	echo '</pre><br/>';
@@ -41,12 +41,15 @@ $dataset->value = 'world';
 
 $dataset2 = $model->getDataset(array('name' => 'hello2', 'value' => 'world2'));
 
+// Dejamos para después la multiinsercción
+/*
 try {
-	$inserts = $model->insert(array($dataset, $dataset2));
+	$inserts = $model->create(array($dataset, $dataset2));
 }
-catch(InsertException $e) {
+catch(CreateException $e) {
 	$inserts = array();
 }
+
 
 // Read and delete rows from a model
 foreach($inserts as $id) {
@@ -57,6 +60,25 @@ foreach($inserts as $id) {
 	}
 	catch(DeleteException $e) {}
 }
+*/
+
+try {
+	$id = $model->create($dataset);
+}
+catch(CreateException $e) {
+	$id = 0;
+}
+
+
+// Read and delete rows from a model
+$data = $model->getData($id);
+echo $data->name.' '.$data->value.'<br/>';
+try {
+	$model->delete($id);
+}
+catch(DeleteException $e) {
+}
+
 
 // Create another Model
 $new_model = $db->getModel();
