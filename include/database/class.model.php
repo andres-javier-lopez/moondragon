@@ -5,14 +5,25 @@ class TableData {
 	
 	protected $table;
 	
+	protected $primary = 'id';
+	
 	protected $fields;
 	
 	protected $relations;
 	
 	protected function setConfig($config) {
-		$this->table = isset($config['table'])?$config['table']:NULL;
-		$this->fields = isset($config['fields'])?$config['fields']:NULL;
-		$this->relations = isset($config['relations'])?$config['relations']:NULL;
+		if(isset($config['table'])) {
+			$this->table = $config['table'];
+		}
+		if(isset($config['primary'])) {
+			$this->primary = $config['primary'];
+		}
+		if(isset($config['fields'])) {
+			$this->fields = $config['fields'];
+		}
+		if(isset($config['relations'])) {
+			$this->relations = $config['relations'];
+		}
 	}
 	
 	public function setTable($table) {
@@ -21,6 +32,11 @@ class TableData {
 	
 	public function setFields($fields) {
 		$this->fields = $fields;
+	}
+	
+	public function getPrimary() {
+		// Agregar un proceso especial en caso de que estemos usando sufijos de nombre de tabla
+		return $this->primary;
 	}
 	
 	protected function getFieldsAndId()
@@ -223,10 +239,32 @@ class Model extends TableData
 			$sql .= '('.$dataset->getColValuesString().')';
 		}
 		
-		echo $sql;
+		echo $sql.'<br/>';
 		/*$this->exec($sql);
 		
 		$id = $this->db->insertId();
 		return $id;*/
+	}
+	
+	
+	/**
+	 * Devuelve un solo registro de la tabla con el id especificado
+	 * @param int $id
+	 * @return Datasetobj
+	 * @throws DBException
+	 */
+	public function getData($id)
+	{
+		// Eliminando los joins por ahora
+		// $sql = 'SELECT '.$this->getFields().' '.$this->getJoinFields().' FROM '.$this->table.' '.$this->getJoins();
+		$sql = 'SELECT '.$this->getFields().' FROM '.$this->table.' ';
+		$sql .= ' WHERE `'.$this->table.'`.`'.$this->getPrimary().'` = "'.$id.'"';
+		
+		echo $sql.'<br/>';
+	
+		/*$data = $this->getRow($sql);
+		$dataset = $this->generateDataset($data);
+		$dataset->setId($id);
+		return $dataset;*/
 	}
 }
