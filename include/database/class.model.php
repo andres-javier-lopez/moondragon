@@ -267,4 +267,19 @@ class Model extends TableData
 		$dataset->setId($id);
 		return $dataset;*/
 	}
+	
+	/**
+	 * Elimina el registro con el id proporcionado en la tabla
+	 * @param int $id
+	 * @return void
+	 * @throws DBException
+	 */
+	public function delete($id)
+	{
+		// Se va a utilizar un sistema diferente para evaluar consultas
+		//$id = $this->db->evalSQL($id);
+		$sql = 'DELETE FROM `'.$this->table.'` WHERE `'.$this->getPrimary().'` = "'.$id.'"';
+		echo $sql.'<br/>';
+		//$this->exec($sql);
+	}
 }
