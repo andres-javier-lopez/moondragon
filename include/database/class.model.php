@@ -76,6 +76,24 @@ class Reader extends TableData
 	}
 }
 
+class Dataset extends TableData
+{
+	protected $data;
+	
+	public function __construct($manager, $config) {
+		$this->manager = $manager;
+		$this->setConfig($config);
+	}
+	
+	public function __set($name, $value) {
+		$this->data[$name] = $value;
+	}
+	
+	public function __get($name) {
+		return isset($this->data[$name])?$this->data[$name]:NULL;
+	}
+}
+
 class Model extends TableData
 {	
 	public function __construct($manager, $config) {
@@ -89,5 +107,14 @@ class Model extends TableData
 		$reader->setFields($this->fields);
 
 		return $reader;
+	}
+	
+	public function getDataset() {
+		$config['table'] = $this->table;
+		$config['fields'] = $this->fields;
+		$config['relations'] = $this->relations;
+		$dataset = new Dataset($this->manager, $config);
+		
+		return $dataset;
 	}
 }
