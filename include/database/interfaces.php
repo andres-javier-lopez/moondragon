@@ -34,6 +34,8 @@ Interface DBManager
 	public function getEmptyResult();
 	
 	public function getQuery($query, $params);
+	
+	public function getModel($config);
 }
 
 Interface DBResult extends Iterator

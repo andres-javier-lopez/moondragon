@@ -3,13 +3,13 @@
 include '../moondragon.database.php';
 
 // Create a Model class
-$config['table'] = 'table';
+$config['table'] = 'table1';
 $config['fields'] = array('name', 'value');
 $config['relations'] = array('table2.id_table2', 'table3.id_table3');
 
 // Init connection
-$conn = new DBConnection('mysql', 'localhost', 'root', '', 'test');
-$db = new DBManager($conn);
+Database::connect('mysql', 'localhost', 'root', '', 'test');
+$db = Database::getManager();
 
 // Instance Model
 $model = $db->getModel($config);
@@ -17,18 +17,21 @@ $model = $db->getModel($config);
 // Make a select query to the model
 $reader = $model->getReader();
 
-$reader->setFields(array('name', 'table2.name'));
-$reader->setOrder('id_table ASC, name DESC');
+// $reader->setFields(array('name', 'table2.name'));
+$reader->setOrder('id DESC, name DESC');
 
 try {
 	$rows = $reader->getRows();
 }
-catch(ReaderException $e) {
+catch(QueryException $e) {
+	echo '<pre>';
+	echo $e->getMessage();
+	echo '</pre><br/>';
 	$rows = array();
 }
 
 foreach($rows AS $row) {
-	echo $row->name_table1.' '.$row->name_table2.'<br/>';
+	echo $row->name.' '.$row->value.'<br/>';
 }
 
 // Insert two rows to a model
