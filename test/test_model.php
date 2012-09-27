@@ -71,14 +71,26 @@ catch(CreateException $e) {
 
 
 // Read and delete rows from a model
-$data = $model->getData($id);
-echo $data->name.' '.$data->value.'<br/>';
+try {
+	$data = $model->getData($id);
+}
+catch(ReadException $e) {
+	$data = new stdClass();
+	$data->name = '';
+	$data->value = '';
+	echo $e->getMessage();
+}
+echo 'los datos son: '.$data->name.' '.$data->value.'<br/>';
 try {
 	$model->delete($id);
 }
 catch(DeleteException $e) {
+	echo $e->getMessage();
 }
 
+echo '<pre>';
+echo $db->showQueryHistory();
+echo '</pre>';
 
 // Create another Model
 $new_model = $db->getModel();

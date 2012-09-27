@@ -13,7 +13,8 @@ class MySQLResult implements DBResult
 	public function __construct($result)
 	{
 		$this->result = $result;
-		$this->rewind();
+		$this->position = 0;
+		$this->valid = true;
 	}
 	
 	public function __destruct()

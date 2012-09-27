@@ -215,6 +215,7 @@ class Model extends TableData
 	
 	public function create($dataset) {
 		// Para procesar multiinserts, es un poco delicado ver que los dataset contengan los mismos campos
+		// También tenemos problemas al devolver el insert id
 		if(is_array($dataset)) {
 			$multiinsert = $dataset;
 			$dataset = $multiinsert[0];
@@ -238,12 +239,16 @@ class Model extends TableData
 		else {
 			$sql .= '('.$dataset->getColValuesString().')';
 		}
+				
+		try {
+			$this->manager->query($sql);
+		}
+		catch(QueryException $e) {
+			throw new CreateException($e->getMessage());
+		}
 		
-		echo $sql.'<br/>';
-		/*$this->exec($sql);
-		
-		$id = $this->db->insertId();
-		return $id;*/
+		$id = $this->manager->insertId();
+		return $id;
 	}
 	
 	
@@ -258,14 +263,30 @@ class Model extends TableData
 		// Eliminando los joins por ahora
 		// $sql = 'SELECT '.$this->getFields().' '.$this->getJoinFields().' FROM '.$this->table.' '.$this->getJoins();
 		$sql = 'SELECT '.$this->getFields().' FROM '.$this->table.' ';
-		$sql .= ' WHERE `'.$this->table.'`.`'.$this->getPrimary().'` = "'.$id.'"';
+		$sql .= ' WHERE `'.$this->table.'`.`'.$this->getPrimary().'` = "%s"';
+				
+		$query = $this->manager->getQuery($sql, array($id));
+		try {
+			$result = $query->getResult();
+		}
+		catch(QueryException $e) {
+			throw new ReadException($e->getMessage());
+		}
+		$data = $result->fetch();
 		
-		echo $sql.'<br/>';
-	
-		/*$data = $this->getRow($sql);
-		$dataset = $this->generateDataset($data);
-		$dataset->setId($id);
-		return $dataset;*/
+		if(is_null($data)) {
+			throw new ReadException(_('No se recupero el registro seleccionado'));
+		}
+		
+		$values = array();
+		foreach($this->fields as $field) {
+			$values[$field] = $data->$field;
+		}
+		$dataset = $this->getDataset($values);
+		$id_field = $this->getPrimary();
+		$dataset->$id_field = $id;
+		
+		return $dataset;
 	}
 	
 	/**
@@ -276,10 +297,13 @@ class Model extends TableData
 	 */
 	public function delete($id)
 	{
-		// Se va a utilizar un sistema diferente para evaluar consultas
-		//$id = $this->db->evalSQL($id);
-		$sql = 'DELETE FROM `'.$this->table.'` WHERE `'.$this->getPrimary().'` = "'.$id.'"';
-		echo $sql.'<br/>';
-		//$this->exec($sql);
+		$sql = 'DELETE FROM `'.$this->table.'` WHERE `'.$this->getPrimary().'` = "%s"';
+				
+		try {
+			$this->manager->getQuery($sql, array($id))->exec();
+		}
+		catch(QueryException $e) {
+			throw new DeleteException($e->getMessage());
+		}
 	}
 }
