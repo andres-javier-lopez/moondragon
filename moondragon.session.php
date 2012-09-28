@@ -9,3 +9,7 @@ assert("defined('MOONDRAGON_PATH')");
 
 require_once 'moondragon.core.php';
 
+
+require_once 'include/session/class.session.php';
+
+Session::init();
