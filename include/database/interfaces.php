@@ -1,5 +1,15 @@
 <?php
 
+/**
+ * Interface para instanciar una conexión con la base de datos
+ *
+ * @author Andrés Javier López <ajavier.lopez@gmail.com>
+ * @copyright Klan Estudio (www.klanestudio.com) - GNU Lesser General Public License
+ * @date Sep 2012
+ * @version 1
+ * @ingroup Database
+ */
+
 Interface DBConnection
 {
 	public function __construct($host, $user, $password, $database);
@@ -10,6 +20,16 @@ Interface DBConnection
 	
 	public function getManager();
 }
+
+/**
+ * Interface para el manejo de operaciones en la base de datos
+ *
+ * @author Andrés Javier López <ajavier.lopez@gmail.com>
+ * @copyright Klan Estudio (www.klanestudio.com) - GNU Lesser General Public License
+ * @date Sep 2012
+ * @version 1
+ * @ingroup Database
+ */
 
 Interface DBManager
 {
@@ -38,6 +58,17 @@ Interface DBManager
 	public function getModel($config);
 }
 
+
+/**
+ * Interface para el manejo de resultados de la base de datos
+ *
+ * @author Andrés Javier López <ajavier.lopez@gmail.com>
+ * @copyright Klan Estudio (www.klanestudio.com) - GNU Lesser General Public License
+ * @date Sep 2012
+ * @version 1
+ * @ingroup Database
+ */
+
 Interface DBResult extends Iterator
 {
 	public function fetch($type);
@@ -46,6 +77,16 @@ Interface DBResult extends Iterator
 	
 	public function numRows();
 }
+
+/**
+ * Interface para el manejo de consultas en la base de datos
+ *
+ * @author Andrés Javier López <ajavier.lopez@gmail.com>
+ * @copyright Klan Estudio (www.klanestudio.com) - GNU Lesser General Public License
+ * @date Sep 2012
+ * @version 1
+ * @ingroup Database
+ */
 
 Interface DBQuery
 {

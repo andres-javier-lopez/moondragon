@@ -1,5 +1,15 @@
 <?php
 
+/**
+ * Clase para manejar las consultas en una base de datos MySQL
+ *
+ * @author Andrés Javier López <ajavier.lopez@gmail.com>
+ * @copyright Klan Estudio (www.klanestudio.com) - GNU Lesser General Public License
+ * @date Sep 2012
+ * @version 1
+ * @ingroup MySQL
+ */
+
 class MySQLQuery implements DBQuery
 {
 	protected $manager;

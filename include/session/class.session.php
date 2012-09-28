@@ -5,10 +5,10 @@
  * 
  * @author Andrés Javier López <ajavier.lopez@gmail.com>
  * @author Noé Francisco Martínez  <noe.martinez@itca.edu.sv>
- * @copyright TuApp.net - GNU Lesser General Public License
- * @date Feb 2012
- * @version 3.2
- * @ingroup Core
+ * @copyright Klan Estudio (www.klanestudio.com) - GNU Lesser General Public License
+ * @date Sep 2012
+ * @version 1
+ * @ingroup Session
  */
 
 class Session

@@ -1,5 +1,15 @@
 <?php
 
+/**
+ * Clase para manejo de ruteo de urls
+ *
+ * @author Andrés Javier López <ajavier.lopez@gmail.com>
+ * @copyright Klan Estudio (www.klanestudio.com) - GNU Lesser General Public License
+ * @date Sep 2012
+ * @version 1
+ * @ingroup Manager
+ */
+
 class Router
 {	
 	private static $files = array();
