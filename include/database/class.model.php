@@ -89,7 +89,7 @@ class Model extends TableData
 	{
 		// Eliminando los joins por ahora
 		// $sql = 'SELECT '.$this->getFields().' '.$this->getJoinFields().' FROM '.$this->table.' '.$this->getJoins();
-		$sql = 'SELECT '.$this->getFields().' FROM '.$this->table.' ';
+		$sql = 'SELECT '.$this->getFields().' FROM `'.$this->table.'` ';
 		$sql .= ' WHERE `'.$this->table.'`.`'.$this->getPrimary().'` = "%s"';
 				
 		$query = $this->manager->getQuery($sql, array($id));

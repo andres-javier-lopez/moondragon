@@ -30,11 +30,15 @@ class MySQLQuery implements DBQuery
 	public function setQuery($query) {
 		$this->query = $query;
 		$this->clearResult();
+		// Permite encadenamiento de objetos
+		return $this;
 	}
 	
 	public function addParam($param) {
 		$this->params[] = $param;
 		$this->clearResult();
+		// Permite encadenamiento de objetos
+		return $this;
 	}
 	
 	public function addParams($params, $replace = false) {
@@ -45,6 +49,8 @@ class MySQLQuery implements DBQuery
 			$this->params = array_merge($this->params, $params);
 		}
 		$this->clearResult();
+		// Permite encadenamiento de objetos
+		return $this;
 	}
 	
 	public function exec() {
@@ -61,6 +67,8 @@ class MySQLQuery implements DBQuery
 		}
 		
 		$this->result = $this->manager->query($query);
+		// Permite encadenamiento de objetos
+		return $this;
 	}
 	
 	public function getResult() {
@@ -73,5 +81,7 @@ class MySQLQuery implements DBQuery
 	
 	public function clearResult() {
 		$this->result = false;
+		// Permite encadenamiento de objetos
+		return $this;
 	}
 }

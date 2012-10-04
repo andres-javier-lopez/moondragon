@@ -34,6 +34,26 @@ foreach($rows AS $row) {
 	echo $row->name.' '.$row->value.'<br/>';
 }
 
+echo '<br/>datos filtrados:<br/>';
+
+$reader->addWhere('1 = 1');
+$reader->addWhere('`%s` IS NOT %s', array('name', 'NULL'));
+$reader->addWhere('name', 'prueba');
+
+try {
+	$rows = $reader->getRows();
+}
+catch(ReadException $e) {
+	echo '<pre>';
+	echo $e->getMessage();
+	echo '</pre><br/>';
+	$rows = array();
+}
+
+foreach($rows AS $row) {
+	echo $row->name.' '.$row->value.'<br/>';
+}
+
 // Insert two rows to a model
 $dataset = $model->getDataset();
 $dataset->name = 'hello';
