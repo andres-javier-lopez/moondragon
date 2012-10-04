@@ -64,6 +64,8 @@ class Router
 			list($section) = explode('/', trim($baseURI, '/'));
 			$managerURI = str_replace($baseURI, '', $requestURI).'/'.$section;			
 		}
+		// agregado control adicional para borrar diagonales duplicadas
+		$managerURI = str_replace('//', '/', $managerURI);
 		
 		$conf = self::getSection($section);
 		
