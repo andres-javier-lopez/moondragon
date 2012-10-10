@@ -20,6 +20,13 @@ class TableData {
 	protected $fields;
 
 	protected $relations;
+	
+	public function __construct($table = NULL, $key = NULL) {
+		if(!is_null($table) && !is_null($key)) {
+			$this->setTable($table);
+			$this->primary = $key;
+		}
+	}
 
 	protected function setConfig($config) {
 		if(isset($config['table'])) {
@@ -32,7 +39,7 @@ class TableData {
 			$this->fields = $config['fields'];
 		}
 		if(isset($config['relations'])) {
-			$this->relations = $config['relations'];
+			$this->setRelations($config['relations']);
 		}
 	}
 
@@ -110,5 +117,25 @@ class TableData {
 
 		$string = implode(', ', $fields);
 		return $string;
+	}
+	
+	protected function setRelations($relations) {
+		if(!empty($relations)) {
+			assert('is_array($relations)');
+			
+			foreach($relations as $field => $relation) {
+				$rels = explode('.', $relation);
+				if(count($rels) == 2) {
+					assert('isset($rels[0]) && isset($rels[1])');
+					if(intval($field) != 0) {
+						$field = $rels[1];
+					}
+					
+					$subtable = new TableData($rels[0], $rels[1]);
+					$this->relations[$field] = $subtable;
+					assert('isset($this->relations[$field]) && $this->relations[$field] instanceof TableData');
+				}
+			}
+		}
 	}
 }
