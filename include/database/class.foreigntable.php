@@ -1,11 +1,21 @@
 <?php
 
-class ForeignTable extends TableData
+class ForeignTable
 {
-	public function __construct($table = NULL, $key = NULL) {
-		if(!is_null($table) && !is_null($key)) {
-			$this->setTable($table);
-			$this->primary = $key;
-		}
+	protected $field;
+	
+	protected $key;
+	
+	public function __construct($field, $key) {
+		$this->field = $field;
+		$this->key = $key;
+	}
+	
+	public function getField() {
+		return $this->field;
+	}
+	
+	public function getKey() {
+		return $this->key;
 	}
 }

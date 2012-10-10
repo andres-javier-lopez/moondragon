@@ -43,9 +43,6 @@ class TableData {
 		if(in_array($field, $this->fields)) {
 			return true;
 		}
-		elseif (array_key_exists($field, $this->relations)){
-			return true;
-		}
 		else {
 			return false;
 		}
@@ -63,9 +60,11 @@ class TableData {
 						$field = $rels[1];
 					}
 						
-					$subtable = new ForeignTable($rels[0], $rels[1]);
-					$this->relations[$field] = $subtable;
-					assert('isset($this->relations[$field]) && $this->relations[$field] instanceof ForeignTable');
+					$subtable = new ForeignTable($field, $rels[1]);
+					$this->relations[$rels[0]] = $subtable;
+					// Las llaves foráneas son campos después de todo
+					$this->fields[] = $field;
+					assert('isset($this->relations[$rels[0]]) && $this->relations[$rels[0]] instanceof ForeignTable');
 				}
 			}
 		}
@@ -91,20 +90,9 @@ class TableData {
 	{
 		// Deshabilitemos por ahora el sufijo de la tabla
 		// $fields = '`'.$this->table.'`.`id_'.$this->table.'`';
+		
+		// aplicado DRY a la lista de campos
 		$fields = '`'.$this->table.'`.`'.$this->getPrimary().'`, '.$this->getFields();
-
-		// Dejamos pendiente la parte de lláves foráneas
-		/*foreach($this->foreign as $foreign)
-		 {
-		$fields .= ', `'.$this->table.'`.`id_'.$foreign.'`';
-		}*/
-
-		/*foreach($this->fields as $field)
-		{
-			// Deshabilitemos por ahora el sufijo de la tabla
-			// $fields .= ', `'.$this->table.'`.`'.$field.'_'.$this->table.'`';
-			$fields .= ', `'.$this->table.'`.`'.$field.'`';
-		}*/
 
 		return $fields;
 	}
@@ -118,34 +106,7 @@ class TableData {
 	{
 		$fields = array();
 
-		// Una vez más deshabilitamos las llaves foráneas
-
-		/*foreach($this->foreign as $foreign)
-		 {
-		if(empty($values))
-		{
-		$columns[] = '`'.$this->table.'`.`id_'.$foreign.'`';
-		}
-		elseif(!is_null($values['id_'.$foreign]))
-		{
-		$columns[] = '`id_'.$foreign.'`';
-		}
-		}*/
-		
-		foreach($this->relations as $field => $table)
-		{
-			if(empty($values))
-			{
-				// Eliminado el sufijo del nombre de la tabla
-				$fields[] = '`'.$this->table.'`.`'.$field.'`';
-			}
-			elseif(isset($values[$field]))
-			{
-				// Eliminado el sufijo del nombre de la tabla
-				$fields[] = '`'.$field.'`';
-			}
-		}
-
+		// Las llaves foráneas ya están en la lista de campos
 		foreach($this->fields as $field)
 		{
 			if(empty($values))
