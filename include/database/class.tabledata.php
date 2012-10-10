@@ -55,12 +55,24 @@ class TableData {
 		// Agregar un proceso especial en caso de que estemos usando sufijos de nombre de tabla
 		return $this->primary;
 	}
+	
+	public function hasField($field) {
+		if(in_array($field, $this->fields)) {
+			return true;
+		}
+		elseif (array_key_exists($field, $this->relations)){
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
 
 	protected function getFieldsAndId()
 	{
 		// Deshabilitemos por ahora el sufijo de la tabla
 		// $fields = '`'.$this->table.'`.`id_'.$this->table.'`';
-		$fields = '`'.$this->table.'`.`id`';
+		$fields = '`'.$this->table.'`.`'.$this->getPrimary().'`';
 
 		// Dejamos pendiente la parte de lláves foráneas
 		/*foreach($this->foreign as $foreign)

@@ -29,7 +29,17 @@ class Model extends TableData
 		$dataset = new Dataset($this->manager);
 		
 		foreach($values as $name => $value) {
-			$dataset->$name = $value;
+			if($this->hasField($name)) {
+				$dataset->$name = $value;
+			}
+			elseif ($this->getPrimary() == $name) {
+				// TODO Es necesario pensar en un sistema adecuado de warnings
+				trigger_error(_('No se puede asignar la llave primaria'), E_USER_WARNING);
+			}
+			else {
+				// aqui tambien
+				trigger_error(sprintf(_('No existe el campo %s dentro de la tabla'), $name), E_USER_WARNING);
+			}
 		}
 		
 		return $dataset;
