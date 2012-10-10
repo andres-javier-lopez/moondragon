@@ -17,29 +17,14 @@ class TableData {
 
 	protected $primary = 'id';
 
-	protected $fields;
+	protected $fields = array();
 
-	protected $relations;
+	protected $relations = array();
 	
 	public function __construct($table = NULL, $key = NULL) {
 		if(!is_null($table) && !is_null($key)) {
 			$this->setTable($table);
 			$this->primary = $key;
-		}
-	}
-
-	protected function setConfig($config) {
-		if(isset($config['table'])) {
-			$this->table = $config['table'];
-		}
-		if(isset($config['primary'])) {
-			$this->primary = $config['primary'];
-		}
-		if(isset($config['fields'])) {
-			$this->fields = $config['fields'];
-		}
-		if(isset($config['relations'])) {
-			$this->setRelations($config['relations']);
 		}
 	}
 
@@ -67,12 +52,48 @@ class TableData {
 			return false;
 		}
 	}
+	
+	public function setRelations($relations) {
+		if(is_array($relations)) {
+			assert('is_array($relations)');
+				
+			foreach($relations as $field => $relation) {
+				$rels = explode('.', $relation);
+				if(count($rels) == 2) {
+					assert('isset($rels[0]) && isset($rels[1])');
+					if(!is_string($field)) {
+						$field = $rels[1];
+					}
+						
+					$subtable = new TableData($rels[0], $rels[1]);
+					$this->relations[$field] = $subtable;
+					assert('isset($this->relations[$field]) && $this->relations[$field] instanceof TableData');
+				}
+			}
+		}
+	}
+	
+	
+	protected function setConfig($config) {
+		if(isset($config['table'])) {
+			$this->table = $config['table'];
+		}
+		if(isset($config['primary'])) {
+			$this->primary = $config['primary'];
+		}
+		if(isset($config['fields'])) {
+			$this->fields = $config['fields'];
+		}
+		if(isset($config['relations'])) {
+			$this->setRelations($config['relations']);
+		}
+	}
 
 	protected function getFieldsAndId()
 	{
 		// Deshabilitemos por ahora el sufijo de la tabla
 		// $fields = '`'.$this->table.'`.`id_'.$this->table.'`';
-		$fields = '`'.$this->table.'`.`'.$this->getPrimary().'`';
+		$fields = '`'.$this->table.'`.`'.$this->getPrimary().'`, '.$this->getFields();
 
 		// Dejamos pendiente la parte de lláves foráneas
 		/*foreach($this->foreign as $foreign)
@@ -80,12 +101,12 @@ class TableData {
 		$fields .= ', `'.$this->table.'`.`id_'.$foreign.'`';
 		}*/
 
-		foreach($this->fields as $field)
+		/*foreach($this->fields as $field)
 		{
 			// Deshabilitemos por ahora el sufijo de la tabla
 			// $fields .= ', `'.$this->table.'`.`'.$field.'_'.$this->table.'`';
 			$fields .= ', `'.$this->table.'`.`'.$field.'`';
-		}
+		}*/
 
 		return $fields;
 	}
@@ -112,6 +133,20 @@ class TableData {
 		$columns[] = '`id_'.$foreign.'`';
 		}
 		}*/
+		
+		foreach($this->relations as $field => $table)
+		{
+			if(empty($values))
+			{
+				// Eliminado el sufijo del nombre de la tabla
+				$fields[] = '`'.$this->table.'`.`'.$field.'`';
+			}
+			elseif(isset($values[$field]))
+			{
+				// Eliminado el sufijo del nombre de la tabla
+				$fields[] = '`'.$field.'`';
+			}
+		}
 
 		foreach($this->fields as $field)
 		{
@@ -120,7 +155,7 @@ class TableData {
 				// Eliminado el sufijo del nombre de la tabla
 				$fields[] = '`'.$this->table.'`.`'.$field.'`';
 			}
-			elseif(!is_null($values[$field]))
+			elseif(isset($values[$field]))
 			{
 				// Eliminado el sufijo del nombre de la tabla
 				$fields[] = '`'.$field.'`';
@@ -129,25 +164,5 @@ class TableData {
 
 		$string = implode(', ', $fields);
 		return $string;
-	}
-	
-	protected function setRelations($relations) {
-		if(!empty($relations)) {
-			assert('is_array($relations)');
-			
-			foreach($relations as $field => $relation) {
-				$rels = explode('.', $relation);
-				if(count($rels) == 2) {
-					assert('isset($rels[0]) && isset($rels[1])');
-					if(intval($field) != 0) {
-						$field = $rels[1];
-					}
-					
-					$subtable = new TableData($rels[0], $rels[1]);
-					$this->relations[$field] = $subtable;
-					assert('isset($this->relations[$field]) && $this->relations[$field] instanceof TableData');
-				}
-			}
-		}
 	}
 }

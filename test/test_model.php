@@ -5,7 +5,7 @@ include '../moondragon.database.php';
 // Create a Model class
 $config['table'] = 'table1';
 $config['fields'] = array('name', 'value');
-$config['relations'] = array('table2.id_table2', 'table3.id_table3');
+$config['relations'] = array('table2.id_table2', 'otra_tabla' => 'table3.id_table3');
 
 // Init connection
 Database::connect('mysql', 'localhost', 'root', '', 'test');
@@ -58,6 +58,7 @@ foreach($rows AS $row) {
 $dataset = $model->getDataset();
 $dataset->name = 'hello';
 $dataset->value = 'world';
+$dataset->id_table2 = 2;
 
 $dataset2 = $model->getDataset(array('name' => 'hello2', 'value' => 'world2'));
 

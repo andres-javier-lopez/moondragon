@@ -18,9 +18,10 @@ class Reader extends TableData
 	
 	protected $vars;
 
-	public function __construct($manager)
+	public function __construct($manager, $config)
 	{
 		$this->manager = $manager;
+		$this->setConfig($config);
 		$this->where = '';
 		$this->vars = array();
 	}

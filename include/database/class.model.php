@@ -11,17 +11,17 @@
  */
 
 class Model extends TableData
-{	
+{
+	protected $config;
+	
 	public function __construct($manager, $config) {
 		$this->manager = $manager;
 		$this->setConfig($config);
+		$this->config = $config;
 	}
 	
 	public function getReader() {
-		$reader = new Reader($this->manager);
-		$reader->setTable($this->table);
-		$reader->setFields($this->fields);
-
+		$reader = new Reader($this->manager, $this->config);
 		return $reader;
 	}
 	
