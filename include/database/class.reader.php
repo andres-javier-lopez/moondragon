@@ -20,8 +20,7 @@ class Reader extends TableData
 
 	public function __construct($manager, $config)
 	{
-		$this->manager = $manager;
-		$this->setConfig($config);
+		parent::__construct($manager, $config);
 		$this->where = '';
 		$this->vars = array();
 	}

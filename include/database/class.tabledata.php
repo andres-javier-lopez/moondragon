@@ -21,11 +21,9 @@ class TableData {
 
 	protected $relations = array();
 	
-	public function __construct($table = NULL, $key = NULL) {
-		if(!is_null($table) && !is_null($key)) {
-			$this->setTable($table);
-			$this->primary = $key;
-		}
+	public function __construct($manager, $config) {
+		$this->manager = $manager;
+		$this->setConfig($config);
 	}
 
 	public function setTable($table) {
@@ -65,9 +63,9 @@ class TableData {
 						$field = $rels[1];
 					}
 						
-					$subtable = new TableData($rels[0], $rels[1]);
+					$subtable = new ForeignTable($rels[0], $rels[1]);
 					$this->relations[$field] = $subtable;
-					assert('isset($this->relations[$field]) && $this->relations[$field] instanceof TableData');
+					assert('isset($this->relations[$field]) && $this->relations[$field] instanceof ForeignTable');
 				}
 			}
 		}

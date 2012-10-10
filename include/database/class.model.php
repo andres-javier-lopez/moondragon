@@ -15,8 +15,7 @@ class Model extends TableData
 	protected $config;
 	
 	public function __construct($manager, $config) {
-		$this->manager = $manager;
-		$this->setConfig($config);
+		parent::__construct($manager, $config);
 		$this->config = $config;
 	}
 	

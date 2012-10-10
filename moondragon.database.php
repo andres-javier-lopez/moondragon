@@ -22,6 +22,7 @@ require_once 'include/database/exceptions.php';
 require_once 'include/database/interfaces.php';
 require_once 'include/database/class.database.php';
 require_once 'include/database/class.tabledata.php';
+require_once 'include/database/class.foreigntable.php';
 require_once 'include/database/class.dataset.php';
 require_once 'include/database/class.reader.php';
 require_once 'include/database/class.model.php';
