@@ -6,6 +6,7 @@ include '../moondragon.database.php';
 $config['table'] = 'table1';
 $config['fields'] = array('name', 'value');
 $config['relations'] = array('table2.id_table2', 'otra_tabla' => 'table3.id_table3');
+$config['joins'] = array('table2' => array('name2', 'value'), 'table3' => array('value'));
 
 // Init connection
 Database::connect('mysql', 'localhost', 'root', '', 'test');
@@ -31,7 +32,7 @@ catch(ReadException $e) {
 }
 
 foreach($rows AS $row) {
-	echo $row->name.' '.$row->value.'<br/>';
+	echo $row->name.' '.$row->value.' '.$row->name2.' '.$row->table2_value.' '.$row->table3_value.'<br/>';
 }
 
 echo '<br/>datos filtrados:<br/>';

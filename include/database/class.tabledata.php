@@ -59,6 +59,15 @@ class TableData extends BasicTable
 		}
 	}
 	
+	public function setJoins($joins) {
+		if(is_array($joins)) {
+			foreach($joins as $table_name => $table) {
+				if(isset($this->relations[$table_name]) && is_array($table)) {
+					$this->relations[$table_name]->setFields($table);
+				}
+			}
+		}
+	}
 	
 	protected function setConfig($config) {
 		if(isset($config['table'])) {
@@ -72,6 +81,9 @@ class TableData extends BasicTable
 		}
 		if(isset($config['relations'])) {
 			$this->setRelations($config['relations']);
+		}
+		if(isset($config['joins'])) {
+			$this->setJoins($config['joins']);
 		}
 	}
 
