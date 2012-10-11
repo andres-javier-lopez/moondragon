@@ -6,12 +6,18 @@ class BasicTable
 	
 	protected $fields = array();
 	
+	protected $alias = array();
+	
 	public function setTable($table) {
 		$this->table = $table;
 	}
 	
 	public function setFields($fields) {
 		$this->fields = $fields;
+	}
+	
+	public function addAlias($field, $alias) {
+		$this->alias[$field] = $alias;
 	}
 	
 	public function getTable() {
@@ -34,7 +40,16 @@ class BasicTable
 			if(empty($values))
 			{
 				// Eliminado el sufijo del nombre de la tabla
-				$fields[] = '`'.$this->table.'`.`'.$field.'`';
+				
+				// Incluido alias
+				if(array_key_exists($field, $this->alias)) {
+					$alias = ' AS `'.$this->alias[$field].'`';
+				}
+				else {
+					$alias = '';
+				}
+				
+				$fields[] = '`'.$this->table.'`.`'.$field.'`'.$alias;
 			}
 			elseif(isset($values[$field]))
 			{

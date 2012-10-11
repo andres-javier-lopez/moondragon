@@ -30,9 +30,16 @@ class ForeignTable extends BasicTable
 		}
 	}
 	
-	public function getJoinFields() {
+	public function getJoinFields($fields) {
 		assert('is_array($this->fields)');
 		if(!empty($this->fields)) {
+			if(is_array($fields)) {
+				foreach($this->fields as $field) {
+					if(in_array($field, $fields)) {
+						$this->addAlias($field, $this->table.'_'.$field);
+					}
+				}
+			}			
 			return $this->getFields();
 		}
 		else {

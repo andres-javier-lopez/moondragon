@@ -96,7 +96,7 @@ class TableData extends BasicTable
 		
 		if(empty($values)) {
 			foreach($this->relations as $jointable) {
-				$joinfields = $jointable->getJoinFields();
+				$joinfields = $jointable->getJoinFields($this->fields);
 				if($fields == '') {
 					$fields = $joinfields;
 				}
