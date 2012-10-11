@@ -66,6 +66,8 @@ class Reader extends TableData
 		// El límite también esta desactivado porque aún no se ha implementado en el driver
 		$sql = 'SELECT '.$this->getFieldsAndId().' FROM `'.$this->table.'`';
 		
+		$sql .= $this->getJoins();
+		
 		// Implementando sistema de where
 		if($this->where != '') {
 			$sql .= $this->where;

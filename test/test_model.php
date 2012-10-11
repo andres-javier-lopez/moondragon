@@ -57,8 +57,8 @@ foreach($rows AS $row) {
 // Insert two rows to a model
 $dataset = $model->getDataset();
 $dataset->name = 'hello';
-$dataset->value = 'world';
-$dataset->id_table2 = 2;
+$dataset->value = 42;
+$dataset->id_table2 = 1;
 
 $dataset2 = $model->getDataset(array('name' => 'hello2', 'value' => 'world2'));
 
@@ -99,9 +99,9 @@ catch(ReadException $e) {
 	$data = new stdClass();
 	$data->name = '';
 	$data->value = '';
-	echo $e->getMessage();
+	echo '<pre>'.$e.'</pre>';
 }
-echo 'los datos son: '.$data->name.' '.$data->value.'<br/>';
+echo '<br/>los datos son: '.$data->name.' '.$data->value.'<br/>';
 try {
 	$model->delete($id);
 }

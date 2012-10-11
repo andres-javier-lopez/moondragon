@@ -10,28 +10,17 @@
  * @ingroup Database
  */
 
-class TableData {
+class TableData extends BasicTable 
+{
 	protected $manager;
 
-	protected $table;
-
 	protected $primary = 'id';
-
-	protected $fields = array();
 
 	protected $relations = array();
 	
 	public function __construct($manager, $config) {
 		$this->manager = $manager;
 		$this->setConfig($config);
-	}
-
-	public function setTable($table) {
-		$this->table = $table;
-	}
-
-	public function setFields($fields) {
-		$this->fields = $fields;
 	}
 
 	public function getPrimary() {
@@ -59,8 +48,8 @@ class TableData {
 					if(!is_string($field)) {
 						$field = $rels[1];
 					}
-						
-					$subtable = new ForeignTable($field, $rels[1]);
+					
+					$subtable = new ForeignTable($rels[0], $field, $rels[1]);
 					$this->relations[$rels[0]] = $subtable;
 					// Las llaves foráneas son campos después de todo
 					$this->fields[] = $field;
@@ -92,36 +81,44 @@ class TableData {
 		// $fields = '`'.$this->table.'`.`id_'.$this->table.'`';
 		
 		// aplicado DRY a la lista de campos
-		$fields = '`'.$this->table.'`.`'.$this->getPrimary().'`, '.$this->getFields();
+		$fields = '`'.$this->table.'`.`'.$this->getPrimary().'`';
+		
+		$other = $this->getFields();
+		if($other != '') {
+			$fields .= ', '.$other;
+		}
 
 		return $fields;
 	}
-
-	/**
-	 * Devuelve una cadena con la lista de campos de la tabla, usado para insert y update
-	 * @param array $values contiene los valores válidos para la inserción
-	 * @return string
-	 */
-	protected function getFields($values = array())
-	{
-		$fields = array();
-
-		// Las llaves foráneas ya están en la lista de campos
-		foreach($this->fields as $field)
-		{
-			if(empty($values))
-			{
-				// Eliminado el sufijo del nombre de la tabla
-				$fields[] = '`'.$this->table.'`.`'.$field.'`';
-			}
-			elseif(isset($values[$field]))
-			{
-				// Eliminado el sufijo del nombre de la tabla
-				$fields[] = '`'.$field.'`';
+	
+	protected function getFields($values = array()) {
+		$fields = parent::getFields($values);
+		
+		if(empty($values)) {
+			foreach($this->relations as $jointable) {
+				$joinfields = $jointable->getJoinFields();
+				if($fields == '') {
+					$fields = $joinfields;
+				}
+				elseif($joinfields != '') {
+					$fields .= ', '.$joinfields;
+				}
 			}
 		}
-
-		$string = implode(', ', $fields);
-		return $string;
+		
+		return $fields;
+	}
+	
+	protected function getJoins() {
+		$sql = '';
+		// Se hace join a las tablas
+		foreach($this->relations as $jointable) {
+			if($jointable->isJoined()) {
+				$ftable = $jointable->getTable();
+				$sql .= ' LEFT JOIN '.$ftable.' ON `'.$this->table.'`.`'.$jointable->getField().'` = `'.$ftable.'`.`'.$jointable->getKey().'`';
+			}
+		}
+		
+		return $sql;
 	}
 }
