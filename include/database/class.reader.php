@@ -17,12 +17,22 @@ class Reader extends TableData
 	protected $where;
 	
 	protected $vars;
+	
+	protected $join_fields = '';
+	
+	protected $join_tables = '';
 
 	public function __construct($manager, $config)
 	{
 		parent::__construct($manager, $config);
 		$this->where = '';
 		$this->vars = array();
+	}
+	
+	public function setJoin($fields, $tables) {
+		// No esta del todo probado
+		$this->join_fields = ', '.$fields;
+		$this->join_tables = $tables;
 	}
 
 	public function setOrder($order) {
@@ -64,9 +74,9 @@ class Reader extends TableData
 	public function getRows() {
 		// En primera instancia no utilizamos joins
 		// El límite también esta desactivado porque aún no se ha implementado en el driver
-		$sql = 'SELECT '.$this->getFieldsAndId().' FROM `'.$this->table.'`';
+		$sql = 'SELECT '.$this->getFieldsAndId().' '.$this->join_fields.' FROM `'.$this->table.'`';
 		
-		$sql .= $this->getJoins();
+		$sql .= $this->getJoins().' '.$this->join_tables;
 		
 		// Implementando sistema de where
 		if($this->where != '') {
