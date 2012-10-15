@@ -31,3 +31,7 @@ class Status404Exception extends MoonDragonException {
 /// Excepción para procesos de Header
 /// @ingroup MoonDragon
 class HeadersException extends MoonDragonException {}
+
+/// Excepción para variables en request
+/// @ingroup MoonDragon
+class RequestException extends MoonDragonException {}

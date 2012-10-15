@@ -8,6 +8,11 @@ class Home extends Manager
         echo _('¡Hola Mundo!');
     }
     
+    public function param() {
+    	$prueba = Request::tryGetGET('prueba', 'vacia');
+    	echo 'La variable es '.$prueba;
+    }
+    
     public function hola() {
     	echo 'definiendo tarea hola';
     }
