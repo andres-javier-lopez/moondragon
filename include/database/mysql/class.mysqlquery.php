@@ -16,14 +16,20 @@ class MySQLQuery implements DBQuery
 	
 	protected $query;
 	
+	protected $limit;
+	
+	protected $offset;
+	
 	protected $params;
 	
 	protected $result;
 	
-	public function __construct($manager, $query = '', $params = array()) {
+	public function __construct($manager, $query = '', $params = array(), $limit = 0, $offset = 0) {
 		$this->manager = $manager;
 		$this->query = $query;
 		$this->params = $params;
+		$this->limit = $limit;
+		$this->offset = $offset;
 		$this->clearResult();
 	}
 	
@@ -31,6 +37,12 @@ class MySQLQuery implements DBQuery
 		$this->query = $query;
 		$this->clearResult();
 		// Permite encadenamiento de objetos
+		return $this;
+	}
+	
+	public function setLimit($limit, $offset = 0) {
+		$this->limit = $limit;
+		$this->offset = $offset;
 		return $this;
 	}
 	
@@ -54,6 +66,7 @@ class MySQLQuery implements DBQuery
 	}
 	
 	public function exec() {
+		assert('isset($this->limit) && isset($this->offset)');
 		if(!empty($this->params)) {
 			$params = array_map(array($this->manager, 'evalSQL'), $this->params);
 			$query = vsprintf($this->query, $params);
@@ -66,7 +79,7 @@ class MySQLQuery implements DBQuery
 			throw new QueryException(_('La consulta esta vacía'));
 		}
 		
-		$this->result = $this->manager->query($query);
+		$this->result = $this->manager->query($query, $this->limit, $this->offset);
 		// Permite encadenamiento de objetos
 		return $this;
 	}

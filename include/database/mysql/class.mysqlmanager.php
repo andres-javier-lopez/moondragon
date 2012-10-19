@@ -20,11 +20,14 @@ class MySQLManager implements DBManager
 		$this->connection = $connection;
 	}
 	
-	public function query( $query )
+	public function query($query, $limit = 0, $offset = 0)
 	{
-
 		$this->connection->checkConnection();
 		$msyqli = $this->connection->getConnection();
+		
+		if($limit > 0 && $offset >= 0) {
+			$query .= ' LIMIT '.$offset.', '.$limit;
+		}
 
 		if( $msyqli->real_query($query) === false )
 		{
@@ -37,6 +40,7 @@ class MySQLManager implements DBManager
 		if($msyqli->field_count > 0)
 		{
 			$result = $msyqli->store_result();
+			assert('$result->num_rows <= $limit || $limit == 0 || $limit < 0');
 				
 			if($result === false)
 			{

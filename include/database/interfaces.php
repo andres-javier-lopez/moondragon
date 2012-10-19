@@ -35,7 +35,7 @@ Interface DBManager
 {
 	public function __construct($connection);
 	
-	public function query($query);
+	public function query($query, $limit = 0, $offset = 0);
 	
 	public function multiquery($multiquery);
 	
@@ -90,9 +90,11 @@ Interface DBResult extends Iterator
 
 Interface DBQuery
 {
-	public function __construct($manager, $query, $params);
+	public function __construct($manager, $query, $params, $limit, $offset);
 	
 	public function setQuery($query);
+	
+	public function setLimit($limit, $offset);
 	
 	public function addParam($param);
 	
