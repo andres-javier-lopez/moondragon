@@ -57,6 +57,8 @@ class TableData extends BasicTable
 				}
 			}
 		}
+		
+		return $this;
 	}
 	
 	public function setJoins($joins) {
@@ -67,6 +69,8 @@ class TableData extends BasicTable
 				}
 			}
 		}
+		
+		return $this;
 	}
 	
 	protected function setConfig($config) {
@@ -85,6 +89,8 @@ class TableData extends BasicTable
 		if(isset($config['joins'])) {
 			$this->setJoins($config['joins']);
 		}
+		
+		return $this;
 	}
 
 	protected function getFieldsAndId()

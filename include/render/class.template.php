@@ -99,6 +99,8 @@ class Template
 			$this->page = $page;
 		}
 		$this->content = '';
+		
+		return $this;
 	}
 
 	/**
@@ -109,6 +111,8 @@ class Template
 	public function setVars( $vars )
 	{
 		$this->vars = $vars;
+		
+		return $this;
 	}
 
 	/**
@@ -197,12 +201,11 @@ class Template
 	 * @return string
 	 * @throws TemplateException
 	 */
-	public static function load( $template, $vars = array(), $page = false)
+	public static function load($template, $vars = array(), $page = false)
 	{
-		$tpl = new self( $template, $page );
-		$vars_array = array_merge(  Vars::getVars(), $vars );
-		$tpl->setVars( $vars_array );
-		return $tpl->show();
+		$tpl = new self($template, $page);
+		$vars_array = array_merge(Vars::getVars(), $vars);
+		return $tpl->setVars($vars_array)->show();
 	}
 }
 

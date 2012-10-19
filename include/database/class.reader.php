@@ -33,6 +33,8 @@ class Reader extends TableData
 		// No esta del todo probado
 		$this->join_fields = ', '.$fields;
 		$this->join_tables = $tables;
+		
+		return $this;
 	}
 
 	public function setOrder($order) {

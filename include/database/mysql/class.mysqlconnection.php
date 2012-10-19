@@ -81,6 +81,8 @@ class MySQLConnection implements DBConnection{
 				throw new BadConnectionException(_('Ocurrió un error al verificar el estado activo de la conexión'));
 			}
 		}
+		
+		return $this;
 	}
 	
 	/**

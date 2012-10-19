@@ -101,6 +101,8 @@ class MySQLManager implements DBManager
 	public function startTran()
 	{
 		$this->connection->getConnection()->autocommit(false);
+		
+		return $this;
 	}
 	
 	/**
@@ -113,6 +115,8 @@ class MySQLManager implements DBManager
 	{
 		$this->connection->getConnection()->commit();
 		$this->connection->getConnection()->autocommit(true);
+		
+		return $this;
 	}
 	
 	/**
@@ -125,6 +129,8 @@ class MySQLManager implements DBManager
 	{
 		$this->connection->getConnection()->rollback();
 		$this->connection->getConnection()->autocommit(true);
+		
+		return $this;
 	}
 	
 	/**
