@@ -45,7 +45,7 @@ class BasicTable
 		$fields = array();
 	
 		// Las llaves foráneas ya están en la lista de campos
-		foreach($this->fields as $field)
+		foreach($this->fields as $alias => $field)
 		{
 			if(empty($values))
 			{
@@ -54,6 +54,9 @@ class BasicTable
 				// Incluido alias
 				if(array_key_exists($field, $this->alias)) {
 					$alias = ' AS `'.$this->alias[$field].'`';
+				}
+				elseif(is_string($alias)) {
+					$alias = ' AS `'.$alias.'`';
 				}
 				else {
 					$alias = '';

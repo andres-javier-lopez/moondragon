@@ -115,8 +115,13 @@ class Model extends TableData
 		}
 		
 		$values = array();
-		foreach($this->fields as $field) {
-			$values[$field] = $data->$field;
+		foreach($this->fields as $alias => $field) {
+			if(is_string($alias)) {
+				$values[$field] = $data->$alias;
+			}
+			else {
+				$values[$field] = $data->$field;
+			}
 		}
 		$dataset = $this->getDataset($values);
 		// Es mejor no incluir la llave primaria aquí

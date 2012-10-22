@@ -34,8 +34,11 @@ class ForeignTable extends BasicTable
 		assert('is_array($this->fields)');
 		if(!empty($this->fields)) {
 			if(is_array($fields)) {
-				foreach($this->fields as $field) {
-					if(in_array($field, $fields)) {
+				foreach($this->fields as $alias => $field) {
+					if(is_string($alias)) {
+						$this->addAlias($field, $alias);
+					}
+					elseif(in_array($field, $fields)) {
 						$this->addAlias($field, $this->table.'_'.$field);
 					}
 				}

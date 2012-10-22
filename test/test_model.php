@@ -4,9 +4,9 @@ include '../moondragon.database.php';
 
 // Create a Model class
 $config['table'] = 'table1';
-$config['fields'] = array('name', 'value');
+$config['fields'] = array('name', 'val' => 'value');
 $config['relations'] = array('table2.id_table2', 'otra_tabla' => 'table3.id_table3');
-$config['joins'] = array('table2' => array('name2', 'value'), 'table3' => array('value'));
+$config['joins'] = array('table2' => array('name2', 'val1' => 'value'), 'table3' => array('value'));
 
 // Init connection
 Database::connect('mysql', 'localhost', 'root', '', 'test');
@@ -32,7 +32,7 @@ catch(ReadException $e) {
 }
 
 foreach($rows AS $row) {
-	echo $row->name.' '.$row->value.' '.$row->name2.' '.$row->table2_value.' '.$row->table3_value.'<br/>';
+	echo $row->name.' '.$row->val.' '.$row->name2.' '.$row->val1.' '.$row->table3_value.'<br/>';
 }
 
 echo '<br/>datos filtrados:<br/>';
@@ -52,7 +52,7 @@ catch(ReadException $e) {
 }
 
 foreach($rows AS $row) {
-	echo $row->name.' '.$row->value.'<br/>';
+	echo $row->name.' '.$row->val.'<br/>';
 }
 
 // Insert two rows to a model
