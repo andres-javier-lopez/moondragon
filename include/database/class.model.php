@@ -6,7 +6,7 @@
  * @author Andrés Javier López <ajavier.lopez@gmail.com>
  * @copyright Klan Estudio (www.klanestudio.com) - GNU Lesser General Public License
  * @date Sep 2012
- * @version 1
+ * @version 2
  * @ingroup Database
  */
 
@@ -56,7 +56,7 @@ class Model extends TableData
 			throw new ModelException(_('No se envió un Dataset válido para inserción'));
 		}
 		
-		$sql = 'INSERT INTO `'.$this->table.'` ('.$this->getFields($dataset->getColValues()).') ';
+		$sql = 'INSERT INTO '.SC.$this->table.SC.' ('.$this->getFields($dataset->getColValues()).') ';
 		$sql .= 'VALUES';
 		
 		if(isset($multiinsert)) {
@@ -98,8 +98,8 @@ class Model extends TableData
 	{
 		// Eliminando los joins por ahora
 		// $sql = 'SELECT '.$this->getFields().' '.$this->getJoinFields().' FROM '.$this->table.' '.$this->getJoins();
-		$sql = 'SELECT '.$this->getFields().' FROM `'.$this->table.'` '.$this->getJoins();
-		$sql .= ' WHERE `'.$this->table.'`.`'.$this->getPrimary().'` = "%s"';
+		$sql = 'SELECT '.$this->getFields().' FROM '.SC.$this->table.SC.' '.$this->getJoins();
+		$sql .= ' WHERE '.SC.$this->table.SC.'.'.SC.$this->getPrimary().SC.' = '.SV.'%s'.SV;
 				
 		$query = $this->manager->getQuery($sql, array($id));
 		try {
@@ -139,7 +139,7 @@ class Model extends TableData
 	 */
 	public function update($id, Dataset $dataset)
 	{
-		$sql = "UPDATE `$this->table` ";
+		$sql = 'UPDATE '.SC.$this->table.SC.' ';
 		$data = $dataset->getColValues();
 	
 		$sep = 'SET';
@@ -148,12 +148,12 @@ class Model extends TableData
 		{
 			if(!is_null($value))
 			{
-				$sql .= "$sep `$col` = '$value' ";
-				$sep = ',';
+				$sql .= $sep.SC.$col.SC.' = '.SV.$value.SV.' ';
+				$sep = ', ';
 			}
 		}
 	
-		$sql .= 'WHERE `'.$this->table.'`.`'.$this->getPrimary().'` = "'.$this->manager->evalSQL($id).'"';
+		$sql .= 'WHERE '.SC.$this->table.SC.'.'.SC.$this->getPrimary().SC.' = '.SV.$this->manager->evalSQL($id).SV;
 	
 		try {
 			$this->manager->query($sql);
@@ -171,7 +171,7 @@ class Model extends TableData
 	 */
 	public function delete($id)
 	{
-		$sql = 'DELETE FROM `'.$this->table.'` WHERE `'.$this->getPrimary().'` = "%s"';
+		$sql = 'DELETE FROM '.SC.$this->table.SC.' WHERE '.SC.$this->getPrimary().SC.' = '.SV.'%s'.SV;
 				
 		try {
 			$this->manager->getQuery($sql, array($id))->exec();

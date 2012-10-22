@@ -9,6 +9,10 @@
  * @ingroup Database
  */
 
+define('SC', '`'); // Separador de campos
+define('SV', '"'); // Separador de valores
+
+
 require_once 'include/database/mysql/class.mysqlconnection.php';
 require_once 'include/database/mysql/class.mysqlmanager.php';
 require_once 'include/database/mysql/class.mysqlresult.php';

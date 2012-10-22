@@ -6,7 +6,7 @@
  * @author Andrés Javier López <ajavier.lopez@gmail.com>
  * @copyright Klan Estudio (www.klanestudio.com) - GNU Lesser General Public License
  * @date Sep 2012
- * @version 2
+ * @version 3
  * @ingroup Database
  */
 
@@ -99,7 +99,7 @@ class TableData extends BasicTable
 		// $fields = '`'.$this->table.'`.`id_'.$this->table.'`';
 		
 		// aplicado DRY a la lista de campos
-		$fields = '`'.$this->table.'`.`'.$this->getPrimary().'`';
+		$fields = SC.$this->table.SC.'.'.SC.$this->getPrimary().SC;
 		
 		$other = $this->getFields();
 		if($other != '') {
@@ -133,7 +133,7 @@ class TableData extends BasicTable
 		foreach($this->relations as $jointable) {
 			if($jointable->isJoined()) {
 				$ftable = $jointable->getTable();
-				$sql .= ' LEFT JOIN '.$ftable.' ON `'.$this->table.'`.`'.$jointable->getField().'` = `'.$ftable.'`.`'.$jointable->getKey().'`';
+				$sql .= ' LEFT JOIN '.SC.$ftable.SC.' ON '.SC.$this->table.SC.'.'.SC.$jointable->getField().SC.' = '.SC.$ftable.SC.'.'.SC.$jointable->getKey().SC;
 			}
 		}
 		

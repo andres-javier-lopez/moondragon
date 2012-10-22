@@ -6,7 +6,7 @@
  * @author Andrés Javier López <ajavier.lopez@gmail.com>
  * @copyright Klan Estudio (www.klanestudio.com) - GNU Lesser General Public License
  * @date Sep 2012
- * @version 1
+ * @version 2
  * @ingroup Database
  */
 
@@ -48,7 +48,7 @@ class Dataset
 		{
 			if(!is_null($value))
 			{
-				$values[$key] = '"'.$value.'"';
+				$values[$key] = SV.$value.SV;
 			}
 			else
 			{

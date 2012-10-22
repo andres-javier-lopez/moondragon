@@ -6,7 +6,7 @@
  * @author Andrés Javier López <ajavier.lopez@gmail.com>
  * @copyright Klan Estudio (www.klanestudio.com) - GNU Lesser General Public License
  * @date Sep 2012
- * @version 1
+ * @version 2
  * @ingroup Database
  */
 
@@ -53,21 +53,21 @@ class BasicTable
 				
 				// Incluido alias
 				if(array_key_exists($field, $this->alias)) {
-					$alias = ' AS `'.$this->alias[$field].'`';
+					$alias = ' AS '.SC.$this->alias[$field].SC;
 				}
 				elseif(is_string($alias)) {
-					$alias = ' AS `'.$alias.'`';
+					$alias = ' AS '.SC.$alias.SC;
 				}
 				else {
 					$alias = '';
 				}
 				
-				$fields[] = '`'.$this->table.'`.`'.$field.'`'.$alias;
+				$fields[] = SC.$this->table.SC.'.'.SC.$field.SC.$alias;
 			}
 			elseif(isset($values[$field]))
 			{
 				// Eliminado el sufijo del nombre de la tabla
-				$fields[] = '`'.$field.'`';
+				$fields[] = SC.$field.SC;
 			}
 		}
 	

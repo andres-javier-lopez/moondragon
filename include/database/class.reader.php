@@ -6,7 +6,7 @@
  * @author Andrés Javier López <ajavier.lopez@gmail.com>
  * @copyright Klan Estudio (www.klanestudio.com) - GNU Lesser General Public License
  * @date Sep 2012
- * @version 3
+ * @version 4
  * @ingroup Database
  */
 
@@ -60,7 +60,7 @@ class Reader extends TableData
 			$string = $where;
 			$this->vars = array_merge($this->vars, $var);
 		} else {
-			$string = '`'.$where.'` = "%s"';
+			$string = SC.$where.SC.' = '.SV.'%s'.SV;
 			$this->vars[] = $var;
 		}
 		
@@ -76,7 +76,7 @@ class Reader extends TableData
 	public function getRows() {
 		// En primera instancia no utilizamos joins
 		// El límite también esta desactivado porque aún no se ha implementado en el driver
-		$sql = 'SELECT '.$this->getFieldsAndId().' '.$this->join_fields.' FROM `'.$this->table.'`';
+		$sql = 'SELECT '.$this->getFieldsAndId().' '.$this->join_fields.' FROM '.SC.$this->table.SC;
 		
 		$sql .= $this->getJoins().' '.$this->join_tables;
 		
