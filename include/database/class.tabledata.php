@@ -75,19 +75,25 @@ class TableData extends BasicTable
 	
 	protected function setConfig($config) {
 		if(isset($config['table'])) {
-			$this->table = $config['table'];
+			$this->setTable($config['table']);
 		}
 		if(isset($config['primary'])) {
 			$this->primary = $config['primary'];
 		}
 		if(isset($config['fields'])) {
-			$this->fields = $config['fields'];
+			$this->setFields($config['fields']);
 		}
 		if(isset($config['relations'])) {
 			$this->setRelations($config['relations']);
 		}
 		if(isset($config['joins'])) {
 			$this->setJoins($config['joins']);
+		}
+		if(isset($config['sufix'])) {
+			$this->setSufix($config['sufix']);
+		}
+		elseif(isset($config['table'])) {
+			$this->setSufix('_'.$this->table);
 		}
 		
 		return $this;

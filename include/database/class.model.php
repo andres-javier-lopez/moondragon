@@ -115,8 +115,9 @@ class Model extends TableData
 		}
 		
 		$values = array();
-		foreach($this->fields as $alias => $field) {
-			if(is_string($alias)) {
+		foreach($this->fields as $field) {
+			if(array_key_exists($field, $this->alias)) {
+				$alias = $this->alias[$field];
 				$values[$field] = $data->$alias;
 			}
 			else {
@@ -142,13 +143,13 @@ class Model extends TableData
 		$sql = 'UPDATE '.SC.$this->table.SC.' ';
 		$data = $dataset->getColValues();
 	
-		$sep = 'SET';
+		$sep = 'SET ';
 	
 		foreach($data as $col => $value)
 		{
 			if(!is_null($value))
 			{
-				$sql .= $sep.SC.$col.SC.' = '.SV.$value.SV.' ';
+				$sql .= $sep.SC.$this->_field($col).SC.' = '.SV.$value.SV.' ';
 				$sep = ', ';
 			}
 		}

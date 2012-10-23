@@ -4,7 +4,7 @@ include '../moondragon.database.php';
 
 // Create a Model class
 $config['table'] = 'table1';
-$config['fields'] = array('name', 'val' => 'value');
+$config['fields'] = array('name#s', 'val' => 'value');
 $config['relations'] = array('table2.id_table2', 'otra_tabla' => 'table3.id_table3');
 $config['joins'] = array('table2' => array('name2', 'val1' => 'value'), 'table3' => array('value'));
 
@@ -19,7 +19,7 @@ $model = $db->getModel($config);
 $reader = $model->getReader();
 
 // $reader->setFields(array('name', 'table2.name'));
-$reader->setOrder('id DESC, name DESC');
+$reader->setOrder('id DESC, name_table1 DESC');
 
 try {
 	$rows = $reader->getRows();
@@ -38,7 +38,7 @@ foreach($rows AS $row) {
 echo '<br/>datos filtrados:<br/>';
 
 $reader->addWhere('1 = 1');
-$reader->addWhere('`%s` IS NOT %s', array('name', 'NULL'));
+$reader->addWhere('`%s` IS NOT %s', array('name_table1', 'NULL'));
 $reader->addWhere('name', 'prueba');
 
 try {
@@ -61,7 +61,7 @@ $dataset->name = 'hello';
 $dataset->value = 42;
 $dataset->id_table2 = 1;
 
-$dataset2 = $model->getDataset(array('name' => 'hello2', 'value' => 'world2'));
+$dataset2 = $model->getDataset(array('name' => 'hello2', 'value' => 'world2', 'id_table2' => 1));
 
 // Dejamos para después la multiinsercción
 /*
@@ -118,7 +118,7 @@ echo '</pre>';
 $new_model = $db->getModel();
 
 $new_model->setTable('table1');
-$new_model->setFields(array('name'));
+$new_model->setFields(array('name#s'));
 
 // Insert a row to the model
 $dataset = $new_model->getDataset();
@@ -133,7 +133,16 @@ catch(CreateException $e) {
 }
 
 // Update a row in the model
-$dataset = $new_model->getData($id);
+try {
+	$dataset = $new_model->getData($id);
+}
+catch(ReadException $e) {
+	echo '<pre>';
+	echo $e;
+	echo $db->showQueryHistory();
+	echo '</pre>';
+	die();
+}
 $dataset->name = 'Hola Mundo!';
 
 try {

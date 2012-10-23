@@ -60,7 +60,7 @@ class Reader extends TableData
 			$string = $where;
 			$this->vars = array_merge($this->vars, $var);
 		} else {
-			$string = SC.$where.SC.' = '.SV.'%s'.SV;
+			$string = SC.$this->_field($where).SC.' = '.SV.'%s'.SV;
 			$this->vars[] = $var;
 		}
 		

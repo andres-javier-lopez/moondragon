@@ -12,18 +12,45 @@
 
 class BasicTable
 {
-	protected $table;
+	const SUFIX = '#s';
+	
+	protected $table = '';
+	
+	protected $sufix = '';
 	
 	protected $fields = array();
 	
 	protected $alias = array();
 	
+	protected $sufix_fields = array();
+	
 	public function setTable($table) {
 		$this->table = $table;
+		if($this->sufix == '') {
+			$this->setSufix('_'.$this->table);
+		}
 	}
 	
 	public function setFields($fields) {
-		$this->fields = $fields;
+		//$this->fields = $fields;
+		foreach($fields as $alias => $field_raw) {
+			if(strpos($field_raw, self::SUFIX) !== false) {
+				$field = str_replace(self::SUFIX, '', $field_raw);
+				$this->sufix_fields[$field] = $field_raw;
+			}
+			else {
+				$field = $field_raw;
+			}
+			$this->fields[] = $field;
+			
+			if(is_string($alias)) {
+				$this->addAlias($field, $alias);
+			}
+		}
+	}
+	
+	public function setSufix($sufix) {
+		$this->sufix = $sufix;
 	}
 	
 	public function addAlias($field, $alias) {
@@ -45,7 +72,7 @@ class BasicTable
 		$fields = array();
 	
 		// Las llaves foráneas ya están en la lista de campos
-		foreach($this->fields as $alias => $field)
+		foreach($this->fields as $field)
 		{
 			if(empty($values))
 			{
@@ -55,23 +82,28 @@ class BasicTable
 				if(array_key_exists($field, $this->alias)) {
 					$alias = ' AS '.SC.$this->alias[$field].SC;
 				}
-				elseif(is_string($alias)) {
-					$alias = ' AS '.SC.$alias.SC;
-				}
 				else {
-					$alias = '';
+					$alias = ' AS '.SC.$field.SC;
 				}
 				
-				$fields[] = SC.$this->table.SC.'.'.SC.$field.SC.$alias;
+				$fields[] = SC.$this->table.SC.'.'.SC.$this->_field($field).SC.$alias;
 			}
 			elseif(isset($values[$field]))
 			{
 				// Eliminado el sufijo del nombre de la tabla
-				$fields[] = SC.$field.SC;
+				$fields[] = SC.$this->_field($field).SC;
 			}
 		}
 	
 		$string = implode(', ', $fields);
 		return $string;
 	}
+	
+	protected function _field($field) {
+		if(array_key_exists($field, $this->sufix_fields)) {
+			$field = str_replace(self::SUFIX, $this->sufix, $this->sufix_fields[$field]);
+		}
+		
+		return $field;
+	} 
 }
