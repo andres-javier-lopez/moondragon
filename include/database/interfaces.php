@@ -55,6 +55,8 @@ Interface DBManager
 	
 	public function getQuery($query, $params);
 	
+	public function getStatement($query);
+	
 	public function getModel($config);
 }
 
@@ -90,7 +92,7 @@ Interface DBResult extends Iterator
 
 Interface DBQuery
 {
-	public function __construct($manager, $query, $params, $limit, $offset);
+	public function __construct($manager, $query = '', $params = array(), $limit = 0, $offset = 0);
 	
 	public function setQuery($query);
 	
@@ -105,4 +107,27 @@ Interface DBQuery
 	public function getResult();
 	
 	public function clearResult();
+}
+
+/**
+ * Interface para el manejo de sentencias preparadas en la base de datos
+ *
+ * @author Andrés Javier López <ajavier.lopez@gmail.com>
+ * @copyright Klan Estudio (www.klanestudio.com) - GNU Lesser General Public License
+ * @date Oct 2012
+ * @version 1
+ * @ingroup Database
+ */
+
+Interface DBStatement extends Iterator
+{
+	public function __construct($manager, $query = '');
+	
+	public function prepareQuery($query);
+	
+	public function bindParam($type, &$param);
+		
+	public function exec();
+		
+	public function getResult();
 }

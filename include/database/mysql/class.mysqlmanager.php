@@ -177,6 +177,10 @@ class MySQLManager implements DBManager
 		return new MySQLQuery($this, $query, $params);
 	}
 	
+	public function getStatement($query) {
+		// Generar objeto para sentencias preparadas
+	}
+	
 	public function getModel($config = array()) {
 		return new Model($this, $config);
 	}
