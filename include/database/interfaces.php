@@ -119,7 +119,7 @@ Interface DBQuery
  * @ingroup Database
  */
 
-Interface DBStatement extends Iterator
+Interface DBStatement
 {
 	public function __construct($manager, $query = '');
 	

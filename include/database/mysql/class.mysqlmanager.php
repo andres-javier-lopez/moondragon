@@ -178,7 +178,8 @@ class MySQLManager implements DBManager
 	}
 	
 	public function getStatement($query) {
-		// Generar objeto para sentencias preparadas
+		$statement = $this->connection->stmt_init();
+		return new MySQLStatetement($this, $query, $statement);
 	}
 	
 	public function getModel($config = array()) {
