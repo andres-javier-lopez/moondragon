@@ -1,9 +1,11 @@
 <?php
 
-// General Exceptions for MoonDragon
-
+/// Excepción general de MoonDragon
+/// @ingroup MoonDragon
 class MoonDragonException extends Exception {}
 
+/// Excepción para procesar errores 404
+/// @ingroup MoonDragon
 class Status404Exception extends MoonDragonException {
 	public function show404() {
 		if(!headers_sent()) {
@@ -26,4 +28,10 @@ class Status404Exception extends MoonDragonException {
 	}	
 }
 
+/// Excepción para procesos de Header
+/// @ingroup MoonDragon
 class HeadersException extends MoonDragonException {}
+
+/// Excepción para variables en request
+/// @ingroup MoonDragon
+class RequestException extends MoonDragonException {}

@@ -1,5 +1,15 @@
 <?php
 
+/**
+ * Clase estática para el manejo de bases de datos
+ *
+ * @author Andrés Javier López <ajavier.lopez@gmail.com>
+ * @copyright Klan Estudio - www.klanestudio.com
+ * @date Sep 2012
+ * @version 1
+ * @ingroup Database
+ */
+
 class Database {
 
 	/**

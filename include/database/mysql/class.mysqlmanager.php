@@ -1,5 +1,15 @@
 <?php
 
+/**
+ * Clase para manejar las operaciones con una base de datos MySQL
+ *
+ * @author Andrés Javier López <ajavier.lopez@gmail.com>
+ * @copyright Klan Estudio (www.klanestudio.com) - GNU Lesser General Public License
+ * @date Sep 2012
+ * @version 1
+ * @ingroup MySQL
+ */
+
 class MySQLManager implements DBManager
 {
 	protected $connection;
@@ -10,11 +20,14 @@ class MySQLManager implements DBManager
 		$this->connection = $connection;
 	}
 	
-	public function query( $query )
+	public function query($query, $limit = 0, $offset = 0)
 	{
-
 		$this->connection->checkConnection();
 		$msyqli = $this->connection->getConnection();
+		
+		if($limit > 0 && $offset >= 0) {
+			$query .= ' LIMIT '.$offset.', '.$limit;
+		}
 
 		if( $msyqli->real_query($query) === false )
 		{
@@ -27,6 +40,7 @@ class MySQLManager implements DBManager
 		if($msyqli->field_count > 0)
 		{
 			$result = $msyqli->store_result();
+			assert('$result->num_rows <= $limit || $limit == 0 || $limit < 0');
 				
 			if($result === false)
 			{
@@ -87,6 +101,8 @@ class MySQLManager implements DBManager
 	public function startTran()
 	{
 		$this->connection->getConnection()->autocommit(false);
+		
+		return $this;
 	}
 	
 	/**
@@ -99,6 +115,8 @@ class MySQLManager implements DBManager
 	{
 		$this->connection->getConnection()->commit();
 		$this->connection->getConnection()->autocommit(true);
+		
+		return $this;
 	}
 	
 	/**
@@ -111,6 +129,8 @@ class MySQLManager implements DBManager
 	{
 		$this->connection->getConnection()->rollback();
 		$this->connection->getConnection()->autocommit(true);
+		
+		return $this;
 	}
 	
 	/**
@@ -155,6 +175,14 @@ class MySQLManager implements DBManager
 	
 	public function getQuery($query, $params = array()) {
 		return new MySQLQuery($this, $query, $params);
+	}
+	
+	public function getStatement($query) {
+		// Generar objeto para sentencias preparadas
+	}
+	
+	public function getModel($config = array()) {
+		return new Model($this, $config);
 	}
 	
 	/**

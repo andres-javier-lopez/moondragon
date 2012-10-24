@@ -1,5 +1,15 @@
 <?php
 
+/**
+ * Clase para manejar la conexión con una base de datos MySQL
+ *
+ * @author Andrés Javier López <ajavier.lopez@gmail.com>
+ * @copyright Klan Estudio (www.klanestudio.com) - GNU Lesser General Public License
+ * @date Sep 2012
+ * @version 1
+ * @ingroup MySQL
+ */
+
 class MySQLConnection implements DBConnection{
 	
 	protected $connection;
@@ -71,6 +81,8 @@ class MySQLConnection implements DBConnection{
 				throw new BadConnectionException(_('Ocurrió un error al verificar el estado activo de la conexión'));
 			}
 		}
+		
+		return $this;
 	}
 	
 	/**

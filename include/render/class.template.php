@@ -4,10 +4,10 @@
  * Manejador de plantillas
  *
  * @author Andrés Javier López <ajavier.lopez@gmail.com>
- * @copyright TuApp.net - GNU Lesser General Public License
- * @date Feb 2012
- * @version 3.2
- * @ingroup Core
+ * @copyright Klan Estudio (www.klanestudio.com) - GNU Lesser General Public License
+ * @date Sep 2012
+ * @version 1
+ * @ingroup Render
  */
 
 class Template
@@ -99,6 +99,8 @@ class Template
 			$this->page = $page;
 		}
 		$this->content = '';
+		
+		return $this;
 	}
 
 	/**
@@ -109,6 +111,8 @@ class Template
 	public function setVars( $vars )
 	{
 		$this->vars = $vars;
+		
+		return $this;
 	}
 
 	/**
@@ -197,12 +201,11 @@ class Template
 	 * @return string
 	 * @throws TemplateException
 	 */
-	public static function load( $template, $vars = array(), $page = false)
+	public static function load($template, $vars = array(), $page = false)
 	{
-		$tpl = new self( $template, $page );
-		$vars_array = array_merge(  Vars::getVars(), $vars );
-		$tpl->setVars( $vars_array );
-		return $tpl->show();
+		$tpl = new self($template, $page);
+		$vars_array = array_merge(Vars::getVars(), $vars);
+		return $tpl->setVars($vars_array)->show();
 	}
 }
 

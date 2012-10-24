@@ -1,5 +1,16 @@
 <?php
 
+/**
+ * Clase núcleo del sistema
+ *
+ * @author Andrés Javier López <ajavier.lopez@gmail.com>
+ * @copyright Klan Estudio (www.klanestudio.com) - GNU Lesser General Public License
+ * @date Sep 2012
+ * @version 1
+ * @ingroup MoonDragon
+ */
+
+
 class MoonDragon
 {
 	public static $registry = array();

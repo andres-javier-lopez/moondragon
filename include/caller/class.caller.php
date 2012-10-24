@@ -1,5 +1,16 @@
 <?php
 
+/**
+ * Clase para hacer llamadas a un RESTful API
+ *
+ * @author Andrés Javier López <ajavier.lopez@gmail.com>
+ * @copyright Klan Estudio (www.klanestudio.com) - GNU Lesser General Public License
+ * @date Sep 2012
+ * @version 1
+ * @ingroup Caller
+ */
+
+
 class Caller
 {
 	protected $api_url;

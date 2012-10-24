@@ -4,10 +4,10 @@
  * Maneja un arreglo de buffers de salida
  *
  * @author Andrés Javier López <ajavier.lopez@gmail.com>
- * @copyright TuApp.net - GNU Lesser General Public License
- * @date Feb 2012
- * @version 3.2
- * @ingroup Core
+ * @copyright Klan Estudio (www.klanestudio.com) - GNU Lesser General Public License
+ * @date Sep 2012
+ * @version 1
+ * @ingroup MoonDragon
  */
 
 class Buffer
