@@ -15,6 +15,19 @@ $db = Database::getManager();
 // Instance Model
 $model = $db->getModel($config);
 
+$dataset = $model->getDataset();
+$dataset->name = 'prueba';
+$dataset->value = 1;
+$dataset->id_table2 = 1;
+
+try {
+	$id = $model->create($dataset);
+}
+catch(CreateException $e) {
+	$id = 0;
+}
+
+
 // Make a select query to the model
 $reader = $model->getReader();
 
@@ -55,13 +68,11 @@ foreach($rows AS $row) {
 	echo $row->name.' '.$row->val.'<br/>';
 }
 
-// Insert two rows to a model
+// Insert rows to a model
 $dataset = $model->getDataset();
 $dataset->name = 'hello';
 $dataset->value = 42;
 $dataset->id_table2 = 1;
-
-$dataset2 = $model->getDataset(array('name' => 'hello2', 'value' => 'world2', 'id_table2' => 1));
 
 try {
 	$id = $model->create($dataset);
@@ -138,9 +149,9 @@ catch(ReadException $e) {
 }
 echo $data->name.'<br/>';
 
-// El borrado másivo se trabajará después
 try {
-	$new_model->delete($id);
+	$new_model->deleteWhere(array('name' => 'hola', 'value' => 'mundo'));
+	$new_model->deleteWhere('`name_table1` != "hello"');
 }
 catch(DeleteException $e) {}
 

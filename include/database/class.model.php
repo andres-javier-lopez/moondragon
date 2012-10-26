@@ -163,4 +163,27 @@ class Model extends TableData
 			throw new DeleteException($e->getMessage());
 		}
 	}
+	
+	
+	public function deleteWhere($where) {
+		$sql = 'DELETE FROM '.SC.$this->table.SC.' WHERE ';
+		
+		if(is_array($where)) {
+			$where_array = array();
+			foreach($where as $field => $value) {
+				$where_array[] = SC.$this->_field($field).SC.' = '.SV.$this->manager->evalSQL($value).SV;
+			}
+			$sql .= implode(' AND ', $where_array);
+		}
+		else {
+			$sql .= $where;
+		}
+				
+		try {
+			$this->manager->query($sql);
+		}
+		catch(QueryException $e) {
+			throw new DeleteException($e->getMessage());
+		}
+	}
 }
