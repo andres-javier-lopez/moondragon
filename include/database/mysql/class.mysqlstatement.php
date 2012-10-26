@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * Clase para manejar las sentencias preparadas de una base de datos MySQL
+ *
+ * @author Andrés Javier López <ajavier.lopez@gmail.com>
+ * @copyright Klan Estudio (www.klanestudio.com) - GNU Lesser General Public License
+ * @ingroup MySQL
+ */
+
 class MySQLStatetement implements DBStatement
 {
 	protected $manager;

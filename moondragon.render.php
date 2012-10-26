@@ -4,8 +4,6 @@
  * @defgroup Render Módulo para manejo de plantillas
  * @author Andrés Javier López <ajavier.lopez@gmail.com>
  * @copyright Klan Estudio (www.klanestudio.com) - GNU Lesser General Public License
- * @date Sep 2012
- * @version 1.0
  * @ingroup MoonDragon
  */
 
