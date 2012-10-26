@@ -45,32 +45,13 @@ class Model extends TableData
 	}
 	
 	public function create($dataset) {
-		// Para procesar multiinserts, es un poco delicado ver que los dataset contengan los mismos campos
-		// También tenemos problemas al devolver el insert id
-		if(is_array($dataset)) {
-			$multiinsert = $dataset;
-			$dataset = $multiinsert[0];
-		}
-		
 		if(!($dataset instanceof Dataset)) {
 			throw new ModelException(_('No se envió un Dataset válido para inserción'));
 		}
 		
 		$sql = 'INSERT INTO '.SC.$this->table.SC.' ('.$this->getFields($dataset->getColValues()).') ';
-		$sql .= 'VALUES';
+		$sql .= 'VALUES ('.$dataset->getColValuesString().')';
 		
-		if(isset($multiinsert)) {
-			foreach($multiinsert as $dataset) {
-				if(!($dataset instanceof Dataset)) {
-					throw new ModelException(_('No se envió un Dataset válido para inserción'));
-				}
-				$sql .= '('.$dataset->getColValuesString().')';
-			}
-		}
-		else {
-			$sql .= '('.$dataset->getColValuesString().')';
-		}
-				
 		try {
 			$this->manager->query($sql);
 		}
@@ -79,6 +60,7 @@ class Model extends TableData
 		}
 		
 		$id = $this->manager->insertId();
+		
 		return $id;
 	}
 	

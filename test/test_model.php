@@ -63,27 +63,6 @@ $dataset->id_table2 = 1;
 
 $dataset2 = $model->getDataset(array('name' => 'hello2', 'value' => 'world2', 'id_table2' => 1));
 
-// Dejamos para después la multiinsercción
-/*
-try {
-	$inserts = $model->create(array($dataset, $dataset2));
-}
-catch(CreateException $e) {
-	$inserts = array();
-}
-
-
-// Read and delete rows from a model
-foreach($inserts as $id) {
-	$data = $model->getData($id);
-	echo $data->name.' '.$data->value.'<br/>';
-	try {
-		$model->delete($id);
-	}
-	catch(DeleteException $e) {}
-}
-*/
-
 try {
 	$id = $model->create($dataset);
 }
