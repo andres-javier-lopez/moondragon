@@ -72,9 +72,9 @@ class BasicTable
 		$fields = array();
 	
 		// Las llaves foráneas ya están en la lista de campos
-		foreach($this->fields as $field)
+		if(empty($values))
 		{
-			if(empty($values))
+			foreach($this->fields as $field)
 			{
 				// Eliminado el sufijo del nombre de la tabla
 				
@@ -88,12 +88,15 @@ class BasicTable
 				
 				$fields[] = SC.$this->table.SC.'.'.SC.$this->_field($field).SC.$alias;
 			}
-			elseif(isset($values[$field]))
-			{
+		}
+		else
+		{
+			foreach($values as $key => $value) {
 				// Eliminado el sufijo del nombre de la tabla
-				$fields[] = SC.$this->_field($field).SC;
+				$fields[] = SC.$this->_field($key).SC;
 			}
 		}
+		
 	
 		$string = implode(', ', $fields);
 		return $string;
