@@ -12,9 +12,17 @@ class BadConnectionException extends DatabaseException {}
 /// @ingroup Database
 class QueryException extends DatabaseException {}
 
+/// Error al procesar sentencias preparadas
+/// @ingroup Database
+class StatementException extends DatabaseException {}
+
 /// La consulta no devolvió resultados
 /// @ingroup Database
 class EmptyResultException extends DatabaseException {}
+
+/// Error en modelo
+/// @ingroup Database
+class ModelException extends DatabaseException {}
 
 /// Error en consulta de lectura
 /// @ingroup Database
