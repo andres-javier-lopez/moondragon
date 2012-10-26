@@ -20,6 +20,10 @@ class StatementException extends DatabaseException {}
 /// @ingroup Database
 class EmptyResultException extends DatabaseException {}
 
+/// Error en modelo
+/// @ingroup Database
+class ModelException extends DatabaseException {}
+
 /// Error en consulta de lectura
 /// @ingroup Database
 class ReadException extends QueryException {}
