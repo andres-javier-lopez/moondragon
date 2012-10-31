@@ -5,8 +5,6 @@
  *
  * @author Andrés Javier López <ajavier.lopez@gmail.com>
  * @copyright Klan Estudio (www.klanestudio.com) - GNU Lesser General Public License
- * @date Oct 2012
- * @version 1
  * @ingroup MoonDragon
  */
 

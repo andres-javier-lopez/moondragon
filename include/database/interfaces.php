@@ -5,8 +5,6 @@
  *
  * @author Andrés Javier López <ajavier.lopez@gmail.com>
  * @copyright Klan Estudio (www.klanestudio.com) - GNU Lesser General Public License
- * @date Sep 2012
- * @version 1
  * @ingroup Database
  */
 
@@ -26,8 +24,6 @@ Interface DBConnection
  *
  * @author Andrés Javier López <ajavier.lopez@gmail.com>
  * @copyright Klan Estudio (www.klanestudio.com) - GNU Lesser General Public License
- * @date Sep 2012
- * @version 1
  * @ingroup Database
  */
 
@@ -66,8 +62,6 @@ Interface DBManager
  *
  * @author Andrés Javier López <ajavier.lopez@gmail.com>
  * @copyright Klan Estudio (www.klanestudio.com) - GNU Lesser General Public License
- * @date Sep 2012
- * @version 1
  * @ingroup Database
  */
 
@@ -85,8 +79,6 @@ Interface DBResult extends Iterator
  *
  * @author Andrés Javier López <ajavier.lopez@gmail.com>
  * @copyright Klan Estudio (www.klanestudio.com) - GNU Lesser General Public License
- * @date Sep 2012
- * @version 1
  * @ingroup Database
  */
 
@@ -114,8 +106,6 @@ Interface DBQuery
  *
  * @author Andrés Javier López <ajavier.lopez@gmail.com>
  * @copyright Klan Estudio (www.klanestudio.com) - GNU Lesser General Public License
- * @date Oct 2012
- * @version 1
  * @ingroup Database
  */
 

@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * Clase para relacionar llaves foráneas
+ *
+ * @author Andrés Javier López <ajavier.lopez@gmail.com>
+ * @copyright Klan Estudio (www.klanestudio.com) - GNU Lesser General Public License
+ * @ingroup Database
+ */
+
 class ForeignTable extends BasicTable
 {
 	protected $field;
