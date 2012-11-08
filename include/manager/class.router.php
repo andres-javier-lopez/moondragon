@@ -42,18 +42,21 @@ class Router
 		$requestURI = $_SERVER['REQUEST_URI'];
 		$scriptName = $_SERVER['SCRIPT_NAME'];
 		
-		if(strpos($requestURI, basename($scriptName)) !== false) {
-			$baseURI = str_replace($scriptName, '', $requestURI);
-		}
-		else {
-			$baseURI = str_replace(dirname($scriptName), '', $requestURI);
-		}
-				
-		if(strpos($baseURI, basename($scriptName)) !== false) {
-			throw new RouteException(_('La url no es válida'));
+		if(dirname($scriptName) != '/') {
+			if(strpos($requestURI, basename($scriptName)) !== false) {
+				$baseURI = str_replace($scriptName, '', $requestURI);
+			}
+			else {
+				$baseURI = str_replace(dirname($scriptName), '', $requestURI);
+			}
+					
+			if(strpos($baseURI, basename($scriptName)) !== false) {
+				throw new RouteException(_('La url no es válida'));
+			}
+			
+			assert('strpos($baseURI, basename($scriptName)) === false');
 		}
 		
-		assert('strpos($baseURI, basename($scriptName)) === false');
 		if($baseURI == '' || $baseURI == '/') {
 			$managerURI = $requestURI;
 			$section = 'index';

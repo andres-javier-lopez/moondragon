@@ -19,12 +19,17 @@ class Reader extends TableData
 	protected $join_fields = '';
 	
 	protected $join_tables = '';
+	
+	protected $limit = 0;
+	
+	protected $offset = 0;
 
 	public function __construct($manager, $config)
 	{
 		parent::__construct($manager, $config);
 		$this->where = '';
 		$this->vars = array();
+		$this->order = '';
 	}
 	
 	public function setJoin($fields, $tables) {
@@ -38,6 +43,24 @@ class Reader extends TableData
 	public function setOrder($order) {
 		$this->order = $order;
 		// Permite encadenamiento de objetos
+		return $this;
+	}
+	
+	public function orderBy($field, $order = 'ASC') {
+		if($this->order == '') {
+			$this->order = SC.$this->_field($field).SC.' '.$order;
+		}
+		else {
+			$this->order .= ', '.SC.$this->_field($field).SC.' '.$order;
+		}
+		
+		return $this;
+	}
+	
+	public function setLimit($limit, $offset = 0) {
+		$this->limit = $limit;
+		$this->offset = $offset;
+	
 		return $this;
 	}
 
@@ -93,10 +116,10 @@ class Reader extends TableData
 		try {
 			// Evaluamos si se agregaron variables a la consulta			
 			if(!empty($this->vars)) {
-				$result = $this->manager->getQuery($sql)->addParams($this->vars)->getResult();
+				$result = $this->manager->getQuery($sql)->setLimit($this->limit, $this->offset)->addParams($this->vars)->getResult();
 			}
 			else {
-				$result = $this->manager->query($sql);
+				$result = $this->manager->query($sql, $this->limit, $this->offset);
 			}
 		}
 		catch(QueryException $e) {

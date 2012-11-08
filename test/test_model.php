@@ -32,7 +32,8 @@ catch(CreateException $e) {
 $reader = $model->getReader();
 
 // $reader->setFields(array('name', 'table2.name'));
-$reader->setOrder('id DESC, name_table1 DESC');
+$reader->setOrder('id DESC');
+$reader->orderBy('name', 'DESC');
 
 try {
 	$rows = $reader->getRows();
@@ -53,6 +54,7 @@ echo '<br/>datos filtrados:<br/>';
 $reader->addWhere('1 = 1');
 $reader->addWhere('`%s` IS NOT %s', array('name_table1', 'NULL'));
 $reader->addWhere('name', 'prueba');
+$reader->setLimit(3);
 
 try {
 	$rows = $reader->getRows();

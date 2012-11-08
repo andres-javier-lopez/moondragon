@@ -87,8 +87,8 @@ class TableData extends BasicTable
 		if(isset($config['joins'])) {
 			$this->setJoins($config['joins']);
 		}
-		if(isset($config['sufix'])) {
-			$this->setSufix($config['sufix']);
+		if(isset($config['suffix'])) {
+			$this->setSufix($config['suffix']);
 		}
 		elseif(isset($config['table'])) {
 			$this->setSufix('_'.$this->table);
