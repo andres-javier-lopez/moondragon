@@ -54,6 +54,7 @@ echo '<br/>datos filtrados:<br/>';
 $reader->addWhere('1 = 1');
 $reader->addWhere('`%s` IS NOT %s', array('name_table1', 'NULL'));
 $reader->addWhere('name', 'prueba');
+$reader->setLimit(3);
 
 try {
 	$rows = $reader->getRows();
