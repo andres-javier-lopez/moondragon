@@ -156,6 +156,10 @@ class MySQLManager implements DBManager
 	 */
 	public function evalSQL( $value )
 	{
+		if(is_null($value)) {
+			return NULL;
+		}
+		
 		if ( get_magic_quotes_gpc() )
 		{
 			stripslashes( $value );
