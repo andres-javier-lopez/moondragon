@@ -25,6 +25,7 @@ class Reader extends TableData
 		parent::__construct($manager, $config);
 		$this->where = '';
 		$this->vars = array();
+		$this->order = '';
 	}
 	
 	public function setJoin($fields, $tables) {
@@ -39,6 +40,15 @@ class Reader extends TableData
 		$this->order = $order;
 		// Permite encadenamiento de objetos
 		return $this;
+	}
+	
+	public function orderBy($field, $order = 'ASC') {
+		if($this->order == '') {
+			$this->order = SC.$this->_field($field).SC.' '.$order;
+		}
+		else {
+			$this->order .= ', '.SC.$this->_field($field).SC.' '.$order;
+		}
 	}
 
 	public function addWhere($where, $var = NULL) {

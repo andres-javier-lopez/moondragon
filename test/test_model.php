@@ -32,7 +32,8 @@ catch(CreateException $e) {
 $reader = $model->getReader();
 
 // $reader->setFields(array('name', 'table2.name'));
-$reader->setOrder('id DESC, name_table1 DESC');
+$reader->setOrder('id DESC');
+$reader->orderBy('name', 'DESC');
 
 try {
 	$rows = $reader->getRows();
