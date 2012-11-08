@@ -137,15 +137,21 @@ class Template
 	private function readTemplate()
 	{
 		assert('file_exists($this->template)');
-		$file_data = fopen($this->template, 'r');
-		if ( !$file_data )
-		{
+		if(filesize($this->template) == 0) {
 			$this->content = '';
-			throw new RenderException( _('No se pudo leer la plantilla') );
 		}
-
-		$this->content = fread( $file_data, filesize( $this->template ) );
-		fclose( $file_data );
+		else {
+			assert('filesize($this->template) > 0');
+			$file_data = fopen($this->template, 'r');
+			if ( !$file_data )
+			{
+				$this->content = '';
+				throw new RenderException( _('No se pudo leer la plantilla') );
+			}
+	
+			$this->content = fread( $file_data, filesize( $this->template ) );
+			fclose( $file_data );
+		}
 	}
 
 	/**
