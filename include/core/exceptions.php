@@ -18,8 +18,13 @@ class Status404Exception extends MoonDragonException {
 			}
 		}
 		
-		if(file_exists('404.html')) {
-			include '404.html';
+		if(file_exists('404.php')) {
+			$message = $this->getMessage();
+			include '404.php';
+		}
+		if(file_exists('404.html') && filesize('404.html') > 0) {
+			$string = file_get_contents('404.html');
+			echo str_replace('[#:message]', $this->getMessage(), $string);
 		}
 		else {
 			echo '<h1>404 Page Not Found</h1>';
