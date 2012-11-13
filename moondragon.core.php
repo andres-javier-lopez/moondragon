@@ -21,7 +21,7 @@ assert_options(ASSERT_BAIL, true);
 assert('defined("MOONDRAGON_PATH")');
 assert('strpos(get_include_path(), PATH_SEPARATOR.MOONDRAGON_PATH) !== false');
 
-require_once 'include/core/locale.php';
+require_once 'include/core/class.moondragonlocale.php';
 require_once 'include/core/exceptions.php';
 require_once 'include/core/interfaces.php';
 require_once 'include/core/class.moondragon.php';

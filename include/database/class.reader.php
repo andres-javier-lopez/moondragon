@@ -107,7 +107,7 @@ class Reader extends TableData
 		}
 
 		// Verificamos si hay una cláusula de order
-		if(isset($this->order))
+		if($this->order != '')
 		{
 			$sql .= ' ORDER BY '.$this->order.' ';
 		}

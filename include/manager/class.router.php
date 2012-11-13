@@ -42,7 +42,7 @@ class Router
 		$requestURI = $_SERVER['REQUEST_URI'];
 		$scriptName = $_SERVER['SCRIPT_NAME'];
 		
-		if(dirname($scriptName) != '/') {
+		if($requestURI != '/') {
 			if(strpos($requestURI, basename($scriptName)) !== false) {
 				$baseURI = str_replace($scriptName, '', $requestURI);
 			}
@@ -55,6 +55,9 @@ class Router
 			}
 			
 			assert('strpos($baseURI, basename($scriptName)) === false');
+		}
+		else {
+			$baseURI = '/';
 		}
 		
 		if($baseURI == '' || $baseURI == '/') {

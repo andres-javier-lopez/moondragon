@@ -1,6 +1,6 @@
 <?php
 
-class Locale
+class MoonDragonLocale
 {
 	public static function init($locale = 'es_SV', $path = './locale') {
 		putenv("LANG=$locale.utf-8");
