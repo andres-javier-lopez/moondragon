@@ -112,4 +112,5 @@ class Buffer
 	}
 }
 
+
 // Fin de archivo

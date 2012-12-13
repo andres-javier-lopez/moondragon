@@ -13,21 +13,41 @@ class ForeignTable extends BasicTable
 	protected $field;
 	
 	protected $key;
-		
+		/**
+                 * 
+                 * @param type $table
+                 * @param type $field
+                 * @param type $key
+                 * 
+                 */
 	public function __construct($table, $field, $key) {
 		$this->table = $table;
 		$this->field = $field;
 		$this->key = $key;
 	}
 	
+        /**
+         * 
+         * @return type
+         */
 	public function getField() {
 		return $this->field;
 	}
+        
+        /**
+         * 
+         * @return type
+         */
 	
 	public function getKey() {
 		return $this->key;
 	}
 	
+        /**
+         * 
+         * @return boolean
+         * 
+         */
 	public function isJoined() {
 		assert('is_array($this->fields)');
 		if(empty($this->fields)) {
@@ -37,6 +57,11 @@ class ForeignTable extends BasicTable
 			return true;
 		}
 	}
+        /**
+         * 
+         * @param type $fields
+         * @return string
+         */
 	
 	public function getJoinFields($fields) {
 		assert('is_array($this->fields)');

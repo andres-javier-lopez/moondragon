@@ -10,18 +10,36 @@
 
 class Model extends TableData
 {
-	protected $config;
+    /**
+     *
+     * @var type 
+     */
+    protected $config;
 	
+    /**
+     * 
+     * @param type $manager
+     * @param type $config
+     */
 	public function __construct($manager, $config) {
 		parent::__construct($manager, $config);
 		$this->config = $config;
 	}
 	
+        /**
+         * 
+         * @return \Reader
+         */
 	public function getReader() {
 		$reader = new Reader($this->manager, $this->config);
 		return $reader;
 	}
 	
+        /**
+         * 
+         * @param type $values
+         * @return \Dataset
+         */
 	public function getDataset($values = array()) {
 		$dataset = new Dataset($this->manager);
 		
@@ -42,6 +60,13 @@ class Model extends TableData
 		return $dataset;
 	}
 	
+        /**
+         * 
+         * @param Dataset $dataset
+         * @return type
+         * @throws ModelException
+         * @throws CreateException
+         */
 	public function create($dataset) {
 		if(!($dataset instanceof Dataset)) {
 			throw new ModelException(_('No se envió un Dataset válido para inserción'));
@@ -61,6 +86,10 @@ class Model extends TableData
 		
 		return $id;
 	}
+        /**
+         * 
+         * @return type
+         */
 	
 	public function read() {
 		// Este es por si acaso
@@ -162,6 +191,11 @@ class Model extends TableData
 		}
 	}
 	
+        /**
+         * 
+         * @param type $where
+         * @throws DeleteException
+         */
 	
 	public function deleteWhere($where) {
 		$sql = 'DELETE FROM '.SC.$this->table.SC.' WHERE ';

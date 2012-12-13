@@ -21,7 +21,12 @@ class MySQLStatetement implements DBStatement
 	protected $result;
 	
 	protected $binded;
-	
+	/**
+         * 
+         * @param type $manager
+         * @param type $query
+         * @param type $statement
+         */
 	public function __construct($manager, $query, $statement) {
 		$this->manager = $manager;
 		$this->statement = $statement;
@@ -31,18 +36,33 @@ class MySQLStatetement implements DBStatement
 		$this->binded = true;
 	}
 	
+        /**
+         * TODO no se para que es
+         */
 	public function __destruct() {
 		$this->statement->close();
 		if($this->result) {
 			$this->result->free();
 		}
 	}
+        /**
+         * 
+         * @param type $query
+         * @return \MySQLStatetement
+         */
 	
 	public function prepareQuery($query) {
 		$this->statement->prepare($query);
 		return $this;
 	}
 	
+        /**
+         * 
+         * @param type $type
+         * @param type $param
+         * @return \MySQLStatetement
+         * @throws StatementException
+         */
 	public function bindParam($type, &$param) {
 		assert('is_string($this->types) && is_array($param)');
 		if($this->binded == true && !empty($this->params)) {
@@ -57,6 +77,11 @@ class MySQLStatetement implements DBStatement
 		return $this;
 	}
 	
+        /**
+         * 
+         * @return \MySQLStatetement
+         * @throws StatementException
+         */
 	public function exec() {
 		if($this->binded) {
 			$this->statement->execute();
@@ -84,11 +109,20 @@ class MySQLStatetement implements DBStatement
 		return $this;
 	}
 	
+        /**
+         * 
+         * @return \MySQLResult
+         */
 	public function getResult() {
 		$this->exec();
 		return new MySQLResult($this->result);
 	}
 	
+        /**
+         * 
+         * @param type $array
+         * @return type
+         */
 	protected function getArrayRefs($array) {
 		// Es necesario evaluar el funcionamiento de este proceso
 		$refs = array();

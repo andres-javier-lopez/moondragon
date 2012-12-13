@@ -17,6 +17,11 @@ class MySQLResult implements DBResult
 	protected $current;
 	
 	protected $valid;
+        
+        /**
+         * 
+         * @param type $result
+         */
 	
 	public function __construct($result)
 	{
@@ -25,6 +30,9 @@ class MySQLResult implements DBResult
 		$this->valid = true;
 	}
 	
+        /**
+         *  TODO no se para que es 
+         */
 	public function __destruct()
 	{
 		if($this->checkResult()) {
@@ -32,6 +40,13 @@ class MySQLResult implements DBResult
 		}
 	}
 	
+        /**
+         * 
+         * @param type $type
+         * @return type
+         * @throws DatabaseException
+         * @throws EmptyResultException
+         */
 	public function fetch($type = 'object')
 	{
 		if($this->checkResult()) {
@@ -52,6 +67,14 @@ class MySQLResult implements DBResult
 		}
 	}
 	
+        /**
+         * 
+         * @param type $field
+         * @param type $row
+         * @return type
+         * @throws DatabaseException
+         * @throws EmptyResultException
+         */
 	public function getResult($field, $row = 0)
 	{
 		if($this->checkResult()) {
@@ -80,6 +103,11 @@ class MySQLResult implements DBResult
 		}
 	}
 	
+        /**
+         * 
+         * @return type
+         * @throws EmptyResultException
+         */
 	public function numRows()
 	{
 		if($this->checkResult()) {
@@ -90,6 +118,9 @@ class MySQLResult implements DBResult
 		}
 	}
 	
+        /**
+         * TODO no se para que es
+         */
 	public function rewind()
 	{
 		if($this->checkResult()) {
@@ -104,17 +135,27 @@ class MySQLResult implements DBResult
 			$this->valid = false;
 		}
 	}
+        /**
+         * 
+         * @return type
+         */
 	
 	public function current()
 	{
 		return $this->current;
 	}
 	
+        /**
+         * 
+         * @return type
+         */
 	public function key()
 	{
 		return $this->position;
 	}
-	
+	/**
+         * TODO no se para que es
+         */
 	public function next()
 	{
 		if($this->checkResult()) {
@@ -125,11 +166,19 @@ class MySQLResult implements DBResult
 		}
 	}
 	
+        /**
+         * 
+         * @return type
+         */
 	public function valid()
 	{
 		return $this->valid;
 	}
 	
+        /**
+         * 
+         * @return boolean
+         */
 	protected function checkResult() {
 		if(!is_null($this->result)) {
 			return true;

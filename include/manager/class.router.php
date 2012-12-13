@@ -14,6 +14,12 @@ class Router
 	
 	private static $managers = array();
 	
+         /**
+	 * añade una seccion
+	 * TODO: nose que hace
+          * @return void 
+        */
+        
 	public static function addSection($identifier, $file, $manager = '', $default = false) {
 		self::$files[$identifier] = $file;
 		self::$managers[$identifier] = $manager;
@@ -38,6 +44,11 @@ class Router
 		}
 	}
 	
+         /**
+	 * TODO: nose que accion realiza
+	 * TODO: nose que hace
+          * @return void 
+        */
 	public static function enroute() {
 		$requestURI = $_SERVER['REQUEST_URI'];
 		$scriptName = $_SERVER['SCRIPT_NAME'];

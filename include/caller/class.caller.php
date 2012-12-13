@@ -16,49 +16,104 @@ class Caller
 	protected $data;
 	
 	protected $data_type;
+        
+         /**
+	 * Constructor 
+          * @param string $url
+	 * TODO: nose que hace
+          * @return void 
+        */
 	
 	public function __construct($url='')
 	{
 		$this->api_url = $url;
 	}
 	
+        /**
+	 * TODO: nose que hace 
+         * @param string $url
+	 * TODO: nose que hace
+         * @return void 
+        */
+        
 	public function setUrl($url) {
 		$this->api_url = $url;
 		return $this;
 	}
+        
+        /**
+	 * Metodo de Envio  
+         * TODO: nose que hace
+          * @return void 
+        */
 	
 	public function get() {
 		$this->checkApiUrl();
 		return $this->api_call(GET_CALL);
 	}
+        
+        
+        /**
+	 * metodo de envio POST 
+          * TODO: nose que hace
+          * @return void 
+        */
 	
 	public function post() {
 		$this->checkApiUrl();
 		return $this->api_call(POST_CALL);
 	}
+        
+        /**
+	 * TODO: nose que hace
+         * @return void 
+        */
 	
 	public function put() {
 		$this->checkApiUrl();
 		return $this->api_call(PUT_CALL);
 	}
 	
+        /**
+	 * Elimina una paeticion 
+         * TODO: nose que hace
+         * @return void 
+        */
 	public function delete() {
 		$this->checkApiUrl();
 		return $this->api_call(DELETE_CALL);
 	}
 	
+        /**
+	 * Conjunto de Datos  
+          * @param string Data
+         * @param $type
+	 * TODO: nose que hace
+          * @return void 
+        */
 	public function setData($data, $type = DATA_JSON) {
 		$this->data = $data;
 		$this->data_type = $type;
 		return $this;
 	}
 	
+        /**
+	  * TODO: nose que hace
+          * @return void 
+        */
 	protected function checkApiUrl() {
 		if($this->api_url == '') {
 			throw new BadApiUrlException();
 		}
 	}
-
+        
+        /**
+	 * La Api llama un metdo de la funcion 
+          * @param string $method
+	 * TODO: nose que hace
+          * @return void 
+        */
+        
 	protected function api_call($method)
 	{
 		$curl = curl_init($this->api_url);

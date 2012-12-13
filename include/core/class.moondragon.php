@@ -6,13 +6,19 @@
  * @author Andrés Javier López <ajavier.lopez@gmail.com>
  * @copyright Klan Estudio (www.klanestudio.com) - GNU Lesser General Public License
  * @ingroup MoonDragon
+ * 
  */
 
 
 class MoonDragon
 {
+    
 	public static $registry = array();
-	
+	/**
+         * ejecuta la accion 
+         * @param Runnable $object
+         * @throws HeadersException
+         */
 	public static function run(Runnable $object) {
 		try {
 			$object->run();

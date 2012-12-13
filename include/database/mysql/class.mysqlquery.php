@@ -21,7 +21,14 @@ class MySQLQuery implements DBQuery
 	protected $params;
 	
 	protected $result;
-	
+	/**
+         * 
+         * @param type $manager
+         * @param type $query
+         * @param type $params
+         * @param type $limit
+         * @param type $offset.
+         */
 	public function __construct($manager, $query = '', $params = array(), $limit = 0, $offset = 0) {
 		$this->manager = $manager;
 		$this->query = $query;
@@ -30,6 +37,12 @@ class MySQLQuery implements DBQuery
 		$this->offset = $offset;
 		$this->clearResult();
 	}
+        
+        /**
+         * 
+         * @param type $query
+         * @return \MySQLQuery
+         */
 	
 	public function setQuery($query) {
 		$this->query = $query;
@@ -37,6 +50,12 @@ class MySQLQuery implements DBQuery
 
 		return $this;
 	}
+        /**
+         * 
+         * @param type $limit
+         * @param type $offset
+         * @return \MySQLQuery
+         */
 	
 	public function setLimit($limit, $offset = 0) {
 		$this->limit = $limit;
@@ -44,6 +63,11 @@ class MySQLQuery implements DBQuery
 		
 		return $this;
 	}
+        /**
+         * 
+         * @param type $param
+         * @return \MySQLQuery
+         */
 	
 	public function addParam($param) {
 		$this->params[] = $param;
@@ -51,7 +75,12 @@ class MySQLQuery implements DBQuery
 
 		return $this;
 	}
-	
+	/**
+         * 
+         * @param type $params
+         * @param type $replace
+         * @return \MySQLQuery
+         */
 	public function addParams($params, $replace = false) {
 		if($replace === true || empty($this->params)) {
 			$this->params = $params;
@@ -63,7 +92,11 @@ class MySQLQuery implements DBQuery
 		
 		return $this;
 	}
-	
+	/**
+         * 
+         * @return \MySQLQuery
+         * @throws QueryException
+         */
 	public function exec() {
 		assert('isset($this->limit) && isset($this->offset)');
 		if(!empty($this->params)) {
@@ -82,7 +115,10 @@ class MySQLQuery implements DBQuery
 		
 		return $this;
 	}
-	
+	/**
+         * 
+         * @return type
+         */
 	public function getResult() {
 		if($this->result === false) {
 			$this->exec();
@@ -90,6 +126,10 @@ class MySQLQuery implements DBQuery
 		
 		return $this->result;
 	}
+        /**
+         * 
+         * @return \MySQLQuery
+         */
 	
 	public function clearResult() {
 		$this->result = false;

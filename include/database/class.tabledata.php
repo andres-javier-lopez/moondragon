@@ -16,16 +16,34 @@ class TableData extends BasicTable
 
 	protected $relations = array();
 	
-	public function __construct($manager, $config) {
+        /**
+         * 
+         * @param type $manager
+         * @param type $config
+         */
+	
+        public function __construct($manager, $config) {
 		$this->manager = $manager;
 		$this->setConfig($config);
 	}
 
+        
+        /**
+         * 
+         * @return type
+         * 
+         */
 	public function getPrimary() {
 		// Agregar un proceso especial en caso de que estemos usando sufijos de nombre de tabla
 		return $this->primary;
 	}
 	
+        /**
+         * 
+         * @param type $field
+         * @return boolean
+         * 
+         */
 	public function hasField($field) {
 		if(in_array($field, $this->fields)) {
 			return true;
@@ -34,6 +52,12 @@ class TableData extends BasicTable
 			return false;
 		}
 	}
+        
+        /**
+         * 
+         * @param type $relations
+         * @return \TableData
+         */
 	
 	public function setRelations($relations) {
 		if(is_array($relations)) {
@@ -59,6 +83,11 @@ class TableData extends BasicTable
 		return $this;
 	}
 	
+        /**
+         * 
+         * @param type $joins
+         * @return \TableData
+         */
 	public function setJoins($joins) {
 		if(is_array($joins)) {
 			foreach($joins as $table_name => $table) {
@@ -71,6 +100,11 @@ class TableData extends BasicTable
 		return $this;
 	}
 	
+        /**
+         * 
+         * @param type $config
+         * @return \TableData
+         */
 	protected function setConfig($config) {
 		if(isset($config['table'])) {
 			$this->setTable($config['table']);
@@ -97,6 +131,10 @@ class TableData extends BasicTable
 		return $this;
 	}
 
+        /**
+         * 
+         * @return string
+         */
 	protected function getFieldsAndId()
 	{
 		// Deshabilitemos por ahora el sufijo de la tabla
@@ -112,6 +150,12 @@ class TableData extends BasicTable
 
 		return $fields;
 	}
+        
+        /**
+         * 
+         * @param type $values
+         * @return string
+         */
 	
 	protected function getFields($values = array()) {
 		$fields = parent::getFields($values);
@@ -131,6 +175,10 @@ class TableData extends BasicTable
 		return $fields;
 	}
 	
+        /**
+         * 
+         * @return string
+         */
 	protected function getJoins() {
 		$sql = '';
 		// Se hace join a las tablas
