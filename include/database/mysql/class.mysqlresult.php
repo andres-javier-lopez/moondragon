@@ -2,7 +2,6 @@
 
 /**
  * Clase para manejar los resultados de una base de datos MySQL
- *
  * @author Andrés Javier López <ajavier.lopez@gmail.com>
  * @copyright Klan Estudio (www.klanestudio.com) - GNU Lesser General Public License
  * @ingroup MySQL
@@ -19,7 +18,6 @@ class MySQLResult implements DBResult
 	protected $valid;
         
         /**
-         * 
          * @param type $result
          */
 	
@@ -68,7 +66,6 @@ class MySQLResult implements DBResult
 	}
 	
         /**
-         * 
          * @param type $field
          * @param type $row
          * @return type

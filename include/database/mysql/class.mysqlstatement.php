@@ -10,6 +10,7 @@
 
 class MySQLStatetement implements DBStatement
 {
+   
 	protected $manager;
 	
 	protected $statement;
