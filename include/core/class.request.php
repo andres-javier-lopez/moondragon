@@ -287,14 +287,21 @@ class Request
 	 */
 	private static function filterXSS($data)
 	{
-		$data = str_replace('&', '&amp;', $data);
-		$data = str_replace('#', '&#35;', $data);
-		$data = str_replace('<', '&lt;', $data);
-		$data = str_replace('>', '&gt;', $data);
-		$data = str_replace('(', '&#40;', $data);
-		$data = str_replace(')', '&#41;', $data);
-		$data = str_replace('"', '&quot;', $data);
-		$data = str_replace("'", '&#39;', $data);
+		if(is_array($data)) {
+			foreach($data as $key => $dat) {
+				$data[$key] = self::filterXSS($dat);
+			}
+		}
+		else {
+			$data = str_replace('&', '&amp;', $data);
+			$data = str_replace('#', '&#35;', $data);
+			$data = str_replace('<', '&lt;', $data);
+			$data = str_replace('>', '&gt;', $data);
+			$data = str_replace('(', '&#40;', $data);
+			$data = str_replace(')', '&#41;', $data);
+			$data = str_replace('"', '&quot;', $data);
+			$data = str_replace("'", '&#39;', $data);
+		}
 	
 		return $data;
 	}
