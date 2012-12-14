@@ -30,17 +30,34 @@ abstract class Manager implements Runnable{
 	}
 	
     public abstract function index();
-
+         
+         /**
+	 * ejecuta la accion
+	 * TODO: nose que hace
+          * @return void 
+        */
+    
     public function run() {
     	assert('$this->ready; /* Run default constructor */');
     	$task = $this->getTask();
         $this->$task();
     }
     
+        /**
+	 * llama un parametro 
+	 * TODO: nose que hace
+          * @return void 
+        */
+    
     public function __call($method, $params) {
     	throw new TaskException();
     }
     
+        /**
+	 * TODO: no se que poner
+	 * TODO: nose que hace
+          * @return void 
+        */
     protected function doTask($task) {
     	if(defined('CLEAN_URL') && CLEAN_URL == true) {
     		assert('CLEAN_URL');
@@ -68,6 +85,13 @@ abstract class Manager implements Runnable{
     	assert('isset($redirection) && $redirection != ""');
     	MoonDragon::redirect($redirection);
     }
+    
+    
+        /**
+	 * Manda atraver de la URL la accion
+	 * TODO: nose que hace
+          * @return boolean 
+        */
     
     protected function getTask() {
     	$task = '';
@@ -114,6 +138,13 @@ abstract class Manager implements Runnable{
     		return 'index';
     	}    	
     }
+    
+    
+        /**
+	 * Carga el parametro de la accion a ejecutar
+	 * TODO: nose que hace
+          * @return boolean 
+        */
     
     protected function loadParams($params) {
     	$params = trim($params, '/');

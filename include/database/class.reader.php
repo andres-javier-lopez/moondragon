@@ -24,6 +24,11 @@ class Reader extends TableData
 	
 	protected $offset = 0;
 
+        /**
+         * 
+         * @param type $manager
+         * @param type $config
+         */
 	public function __construct($manager, $config)
 	{
 		parent::__construct($manager, $config);
@@ -32,6 +37,13 @@ class Reader extends TableData
 		$this->order = '';
 	}
 	
+        /**
+         * 
+         * @param type $fields
+         * @param type $tables
+         * @return \Reader
+         * 
+         */
 	public function setJoin($fields, $tables) {
 		// No esta del todo probado
 		$this->join_fields = ', '.$fields;
@@ -40,12 +52,23 @@ class Reader extends TableData
 		return $this;
 	}
 
+        /**
+         * 
+         * @param type $order
+         * @return \Reader
+         */
 	public function setOrder($order) {
 		$this->order = $order;
 		// Permite encadenamiento de objetos
 		return $this;
 	}
 	
+        /**
+         * 
+         * @param type $field
+         * @param type $order
+         * @return \Reader
+         */
 	public function orderBy($field, $order = 'ASC') {
 		if($this->order == '') {
 			$this->order = SC.$this->_field($field).SC.' '.$order;
@@ -56,6 +79,13 @@ class Reader extends TableData
 		
 		return $this;
 	}
+        
+        /**
+         * 
+         * @param type $limit
+         * @param type $offset
+         * @return \Reader
+         */
 	
 	public function setLimit($limit, $offset = 0) {
 		$this->limit = $limit;
@@ -64,6 +94,12 @@ class Reader extends TableData
 		return $this;
 	}
 
+        /**
+         * 
+         * @param type $where
+         * @param type $var
+         * @return \Reader
+         */
 	public function addWhere($where, $var = NULL) {
 		// Existen tres maneras de utilizar la función de where:
 		// se puede agregar una condición directamente,

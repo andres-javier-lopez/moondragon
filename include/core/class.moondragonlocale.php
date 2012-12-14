@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * Clase de Localizacion de idiomas
+ *
+ * @author Andrés Javier López <ajavier.lopez@gmail.com>
+ * @copyright Klan Estudio (www.klanestudio.com) - GNU Lesser General Public License
+ * @ingroup MoonDragon
+ */
+
 class MoonDragonLocale
 {
 	public static function init($locale = 'es_SV', $path = './locale') {
