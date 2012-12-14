@@ -18,20 +18,6 @@ class Database {
 	private static $profiles = array();
 
 	/**
-	 * Perfil de conexión activo
-	 * @var string $selected
-	 */
-
-	private static $selected;
-
-	/**
-	 * Bandera para controlar el estado de la conexion
-	 * @var boolean $connected
-	 */
-
-	private static $connected = false;
-
-	/**
 	 * Mantiene el recurso de conexion
 	 * @var DBConnection $connection
 	 */
@@ -50,8 +36,9 @@ class Database {
 	 * @return void
 	 */
 
-	public static function createProfile( $profile, $host, $user, $password, $database )
+	public static function createProfile( $profile, $engine, $host, $user, $password, $database )
 	{
+		self::$profiles[$profile]['engine'] = $engine;
 		self::$profiles[$profile]['host'] = $host;
 		self::$profiles[$profile]['user'] = $user;
 		self::$profiles[$profile]['password'] = $password;
@@ -65,24 +52,15 @@ class Database {
 	 * @throws BadConnectionException
 	 */
 
-	public static function selectProfile( $name )
+	public static function connectProfile( $name )
 	{
 		if( isset( self::$profiles[$name] ) )
 		{
-			$previous = self::$selected;
-			self::$selected = $name;
-			self::$connected = false;
-			try {
-				self::checkConnection();
-			}catch(BadConnectionException $e)
-			{
-				self::$selected = $previous;
-				throw $e;
-			}
+			self::connect(self::$profiles[$name]['engine'], self::$profiles[$name]['host'], self::$profiles[$name]['user'], self::$profiles[$name]['password'], self::$profiles[$name]['database']);
 		}
 		else
 		{
-			throw BadConnectionException('No existe el perfil seleccionado');
+			throw BadConnectionException(_('No existe el perfil seleccionado'));
 		}
 	}
 
