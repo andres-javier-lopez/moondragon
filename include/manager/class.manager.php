@@ -10,13 +10,31 @@
 
 abstract class Manager implements Runnable{
 	
+    /**
+     * inicializamos la variable $call como array
+     *  @var type 
+     * @return void
+     * 
+     */
 	protected $call = array();
 	
+        /**
+         * Declaramos variables
+         * @var $manager_url
+         * @var $math_url
+         * @var $ready
+         * 
+         */
 	protected $manager_url = '';
 	
 	protected $match_url = '';
 	
 	private $ready = false;
+        /**
+         *  creamos un constructor para validar la URL
+         * @param type $match_url
+         * @return void
+         */
 		
 	public function __construct($match_url = '') {
 		$this->ready = true;
@@ -143,7 +161,7 @@ abstract class Manager implements Runnable{
         /**
 	 * Carga el parametro de la accion a ejecutar
 	 * TODO: nose que hace
-          * @return boolean 
+         * @return boolean 
         */
     
     protected function loadParams($params) {

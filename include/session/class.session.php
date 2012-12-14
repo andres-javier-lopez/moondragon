@@ -7,13 +7,15 @@
  * @author Noé Francisco Martínez  <noe.martinez@itca.edu.sv>
  * @copyright Klan Estudio (www.klanestudio.com) - GNU Lesser General Public License
  * @ingroup Session
+ * 
  */
 
 class Session
 {	
 	/**
-	 * Identificador de la aplicación actual
+         * Identificador de la aplicación actual
 	 * @var string $app_id
+         * @return void
 	 */
 	private static $app_id;
 	
@@ -61,7 +63,7 @@ class Session
    		}
    		else
    		{
-   			return NULL;
+   			 return NULL;
    		}   		
    	}
    	
@@ -82,7 +84,7 @@ class Session
    	
    	/**
    	 * Limpia todas las variables de sesión para la aplicación
-   	 * @return void
+         * @return void
    	 */
    	public static function clear()
    	{
