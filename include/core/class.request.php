@@ -12,6 +12,18 @@
 class Request
 {
 	/**
+	 * Variable que controla el modo de pruebas
+	 * @var boolean
+	 */
+	public static $test_mode = false;
+	
+	/**
+	 * Valores de prueba para el sistema
+	 * @var array
+	 */
+	public static $test_values = array();
+	
+	/**
 	 * Devuelve la variable POST indicada
 	 * @param string $id
 	 * @param boolean $filter determina si el resultado se filtra contra XSS, por defecto falso
@@ -20,6 +32,10 @@ class Request
 	 */
 	public static function getPOST($id, $filter = false)
 	{
+		if(self::$test_mode) {
+			return self::getTestValue($id);
+		}
+		
 		if(!isset($_POST[$id]))
 		{
 			throw new RequestException(sprintf(_('No se ha recibido la variable %s en POST'), $id));
@@ -44,6 +60,10 @@ class Request
 	 */
 	public static function tryGetPOST($id, $alt, $filter = false)
 	{
+		if(self::$test_mode) {
+			return self::getTestValue($id, $alt);
+		}
+		
 		if(!isset($_POST[$id]))
 		{
 			return $alt;
@@ -67,6 +87,10 @@ class Request
 	 */
 	public static function getGET($id, $filter = false)
 	{
+		if(self::$test_mode) {
+			return self::getTestValue($id);
+		}
+		
 		if(isset($_GET[$id]))
 		{
 			$value = $_GET[$id];
@@ -110,6 +134,10 @@ class Request
 	 */
 	public static function tryGetGET($id, $alt, $filter = false)
 	{
+		if(self::$test_mode) {
+			return self::getTestValue($id, $alt);
+		}
+		
 		if(isset($_GET[$id]))
 		{
 			$value = $_GET[$id];
@@ -152,6 +180,10 @@ class Request
 	 */
 	public static function getREQUEST($id, $filter = false)
 	{
+		if(self::$test_mode) {
+			return self::getTestValue($id);
+		}
+		
 		if(isset($_REQUEST[$id]))
 		{
 			$value = $_REQUEST[$id];
@@ -195,6 +227,10 @@ class Request
 	 */
 	public static function tryGetREQUEST($id, $alt, $filter = false)
 	{
+		if(self::$test_mode) {
+			return self::getTestValue($id, $alt);
+		}
+		
 		if(isset($_REQUEST[$id]))
 		{
 			$value = $_REQUEST[$id];
@@ -226,6 +262,22 @@ class Request
 		}
 	
 		return $value;
+	}
+	
+	/**
+	 * Funcion de pruebas 
+	 */
+	
+	private static function getTestValue($id, $alt = NULL) {
+		if(isset($test_values[$id])) {
+			return self::filterXSS($test_values[$id]);
+		}
+		elseif(!is_null($alt)) {
+			return self::filterXSS($alt);
+		}
+		else {
+			return self::filterXSS($id);
+		}
 	}
 	
 	/**
