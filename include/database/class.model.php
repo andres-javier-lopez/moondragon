@@ -96,6 +96,54 @@ class Model extends TableData
 		return $this->getReader()->getRows();
 	}
 	
+	/**
+	 * Obtiene el id de un elemento único que cumpla ciertas condiciones
+	 * @param string $cond
+	 * @param string|array $value
+	 * @return int
+	 * @throws ModelException
+	 * @throws ReaderException
+	 */
+	public function getId($cond, $value = '') {
+		if(!is_string($cond)) {
+			throw new ModelException(_('La condición debe ser una cadena de texto'));
+		}
+		assert('is_string($cond)');
+		
+		$sql = 'SELECT '.SC.$this->getPrimary().SC.' FROM '.SC.$this->table.SC.' WHERE ';
+		if($value != '' && is_string($value)) {
+			assert('is_string($value)');
+			assert('!is_array($value)');
+			$sql .= SC.$cond.SC.' = '.SV.$this->manager->evalSQL($value).SV.';';
+		}
+		else {
+			$sql .= $cond;
+		}
+		
+		$query = $this->manager->getQuery($sql);
+		if(is_array($value)) {
+			$query->addParams($value);
+		}
+		
+		try {
+			$result = $query->getResult();
+		}
+		catch(QueryException $e) {
+			throw new ReadException($e->getMessage());
+		}
+		
+		if($result->numRows() != 1) {
+			throw new ReadException(_('La condición de getId debe devolver exactamente un resultado'));
+		}
+		assert('$result->numRows() == 1');
+		$data = $result->fetch();
+		assert('$data');
+		
+		$id = $this->getPrimary();
+		assert('isset($data->$id)');
+		return $data->$id;		
+	}
+	
 	
 	/**
 	 * Devuelve un solo registro de la tabla con el id especificado
