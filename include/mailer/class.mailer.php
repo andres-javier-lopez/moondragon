@@ -40,7 +40,12 @@ class Mailer
 	 */
 	private static function get( $name )
 	{
-		return self::$conf[$name];
+		if(isset(self::$conf[$name])) {
+			return self::$conf[$name];
+		}
+		else {
+			return '';
+		}
 	}
 	
 	/**
@@ -190,7 +195,7 @@ class Mailer
 	 * @param string $subject
 	 * @param string $body
 	 * @param string|array $address puede ser un array o una string
-	 * @return boolean
+	 * @return void
 	 * @throws MailConfException
 	 * @throws MailerException
 	 */
@@ -200,31 +205,28 @@ class Mailer
 		assert('class_exists("PHPMailer")');
 		$mail = new PHPMailer(true);
 
+		$mail->Subject = $subject;
+		$mail->MsgHTML($body);
+		
+		self::confMailServer($mail);
+		self::confSender($mail);
+		self::processAddress($address, $mail);
+		
+		if(self::get('charset') == '') {
+			$mail->CharSet = 'utf-8';
+		}
+		else {
+			$mail->CharSet = self::get('charset');
+		}
+		
 		try
 		{
-			$mail->Subject = $subject;
-			$mail->MsgHTML($body);
-		
-			self::confMailServer($mail);
-		
-			self::confSender($mail);
-			self::processAddress($address, $mail);
-
 			$mail->Send();
 		}
 		catch(phpmailerException $e)
 		{
-			if(self::$conf['mailer_exceptions'] == true)
-			{
-				throw new MailerException($e->getMessage());
-			}
-			else
-			{
-				return false;
-			}
+			throw new MailerException($e->getMessage());
 		}
-		
-		return true;
 	}
 
 }
