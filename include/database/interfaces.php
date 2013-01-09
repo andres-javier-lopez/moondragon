@@ -49,11 +49,11 @@ Interface DBManager
 	
 	public function getEmptyResult();
 	
-	public function getQuery($query, $params);
+	public function getQuery($query, $params = array());
 	
 	public function getStatement($query);
 	
-	public function getModel($config);
+	public function getModel($config = array());
 }
 
 
@@ -67,7 +67,7 @@ Interface DBManager
 
 Interface DBResult extends Iterator
 {
-	public function fetch($type);
+	public function fetch($type = 'object');
 	
 	public function getResult($field, $row = 0);
 	
@@ -88,11 +88,11 @@ Interface DBQuery
 	
 	public function setQuery($query);
 	
-	public function setLimit($limit, $offset);
+	public function setLimit($limit, $offset = 0);
 	
 	public function addParam($param);
 	
-	public function addParams($params, $replace);
+	public function addParams($params, $replace = false);
 	
 	public function exec();
 	
