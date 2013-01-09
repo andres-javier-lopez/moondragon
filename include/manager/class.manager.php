@@ -159,3 +159,14 @@ abstract class Manager implements Runnable{
     }
     
 }
+
+/**
+ * Controller es otro nombre permitido para la clase Manager
+ * 
+ * @author Andrés Javier López <ajavier.lopez@gmail.com>
+ * @copyright Klan Estudio (www.klanestudio.com) - GNU Lesser General Public License
+ * @ingroup Manager
+ */
+abstract class Controller extends Manager {}
+
+// Fin de archivo
