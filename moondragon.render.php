@@ -1,10 +1,14 @@
 <?php
 
 /**
- * @defgroup Render Módulo para manejo de plantillas
+ * @defgroup Render Render
+ * @brief Módulo para manejo de plantillas
  * @author Andrés Javier López <ajavier.lopez@gmail.com>
  * @copyright Klan Estudio (www.klanestudio.com) - GNU Lesser General Public License
  * @ingroup MoonDragon
+ * 
+ * @exception RenderException Excepción general del módulo
+ * @exception TemplateNotFoundException Plantilla no encontrada
  */
 
 if(!defined('MOONDRAGON_PATH')) {

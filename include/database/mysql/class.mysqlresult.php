@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Clase para manejar los resultados de una base de datos MySQL
+ * @brief Clase para manejar los resultados de una base de datos MySQL
  * @author Andrés Javier López <ajavier.lopez@gmail.com>
  * @copyright Klan Estudio (www.klanestudio.com) - GNU Lesser General Public License
  * @ingroup MySQL
@@ -9,42 +9,60 @@
 
 class MySQLResult implements DBResult
 {
+	/**
+	 * Recurso con el resultado de la consulta
+	 * @var mysqli_result $result
+	 */
 	protected $result;
-	
+
+	/**
+	 * Posición del regitro actual
+	 * @var int $position
+	 */
 	protected $position;
-	
+
+	/**
+	 * Registro actual
+	 * @var object $current
+	 */
 	protected $current;
-	
+
+	/**
+	 * Verifica si es válido continuar con la iteración
+	 * @var boolean $valid
+	 */
 	protected $valid;
-        
-        /**
-         * @param type $result
-         */
-	
+
+	/**
+	 * Inicializa el resultado
+	 * @param mysqli_result $result
+	 * @return void
+	 */
+
 	public function __construct($result)
 	{
 		$this->result = $result;
 		$this->position = 0;
 		$this->valid = true;
 	}
-	
-        /**
-         *  TODO no se para que es 
-         */
+
+	/**
+	 *  Limpia el resultado al destruir el objeto
+	 */
 	public function __destruct()
 	{
 		if($this->checkResult()) {
 			$this->result->free();
 		}
 	}
-	
-        /**
-         * 
-         * @param type $type
-         * @return type
-         * @throws DatabaseException
-         * @throws EmptyResultException
-         */
+
+	/**
+	 * Obtiene un registro de la lista de resultados
+	 * @param string $type Los tipos válidos son 'object', 'row' y 'assoc'
+	 * @return array | object
+	 * @throws DatabaseException
+	 * @throws EmptyResultException
+	 */
 	public function fetch($type = 'object')
 	{
 		if($this->checkResult()) {
@@ -64,14 +82,15 @@ class MySQLResult implements DBResult
 			throw new EmptyResultException();
 		}
 	}
-	
-        /**
-         * @param type $field
-         * @param type $row
-         * @return type
-         * @throws DatabaseException
-         * @throws EmptyResultException
-         */
+
+	/**
+	 * Obtiene un campo del registro específicado
+	 * @param string $field
+	 * @param int $row
+	 * @return string
+	 * @throws DatabaseException
+	 * @throws EmptyResultException
+	 */
 	public function getResult($field, $row = 0)
 	{
 		if($this->checkResult()) {
@@ -80,7 +99,7 @@ class MySQLResult implements DBResult
 				$this->result->data_seek($row);
 				$data = $this->result->fetch_assoc();
 				$this->result->data_seek(0);
-			
+					
 				if(isset($data[$field]))
 				{
 					return $data[$field];
@@ -99,12 +118,12 @@ class MySQLResult implements DBResult
 			throw new EmptyResultException();
 		}
 	}
-	
-        /**
-         * 
-         * @return type
-         * @throws EmptyResultException
-         */
+
+	/**
+	 * Devuelve el número de registros obtenidos
+	 * @return int
+	 * @throws EmptyResultException
+	 */
 	public function numRows()
 	{
 		if($this->checkResult()) {
@@ -114,10 +133,11 @@ class MySQLResult implements DBResult
 			throw new EmptyResultException();
 		}
 	}
-	
-        /**
-         * TODO no se para que es
-         */
+
+	/**
+	 * Regresa al principio de la lista de resultados.
+	 * @return void
+	 */
 	public function rewind()
 	{
 		if($this->checkResult()) {
@@ -132,27 +152,29 @@ class MySQLResult implements DBResult
 			$this->valid = false;
 		}
 	}
-        /**
-         * 
-         * @return type
-         */
 	
+	/**
+	 * Devuelve el objeto actual
+	 * @return object
+	 */
 	public function current()
 	{
 		return $this->current;
 	}
-	
-        /**
-         * 
-         * @return type
-         */
+
+	/**
+	 * Devuelve la posición del objeto actual
+	 * @return int
+	 */
 	public function key()
 	{
 		return $this->position;
 	}
+	
 	/**
-         * TODO no se para que es
-         */
+	 * Pasa al siguiente registro de la lista de resultados
+	 * @return void
+	 */
 	public function next()
 	{
 		if($this->checkResult()) {
@@ -162,20 +184,20 @@ class MySQLResult implements DBResult
 			}
 		}
 	}
-	
-        /**
-         * 
-         * @return type
-         */
+
+	/**
+	 * Comprueba si el resultado actual es válido
+	 * @return boolean
+	 */
 	public function valid()
 	{
 		return $this->valid;
 	}
-	
-        /**
-         * 
-         * @return boolean
-         */
+
+	/**
+	 * Comprueba si se tiene una lista de resultados válida
+	 * @return boolean
+	 */
 	protected function checkResult() {
 		if(!is_null($this->result)) {
 			return true;
@@ -185,3 +207,5 @@ class MySQLResult implements DBResult
 		}
 	}
 }
+
+// Fin del archivo

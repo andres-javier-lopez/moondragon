@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Clase para manejar la conexión con una base de datos MySQL
+ * @brief Clase para manejar la conexión con una base de datos MySQL
  *
  * @author Andrés Javier López <ajavier.lopez@gmail.com>
  * @copyright Klan Estudio (www.klanestudio.com) - GNU Lesser General Public License
@@ -10,21 +10,45 @@
 
 class MySQLConnection implements DBConnection{
 	
+	/**
+	 * Recurso de la conexión
+	 * @var mysqli $connection
+	 */
 	protected $connection;
 	
+	/**
+	 * Servidor de base de datos
+	 * @var string $host
+	 */
 	protected $host;
 	
+	/**
+	 * Usuario de la base de datos
+	 * @var string $user
+	 */
 	protected $user;
 	
+	/**
+	 * Contraseña de la base de datos
+	 * @var string $password
+	 */
 	protected $password;
 	
+	/**
+	 * Nombre de la base de datos
+	 * @var string $database
+	 */
 	protected $database;
 	
 	/**
 	 * Inicializa el objeto de conexión
+	 * @param string $host
+	 * @param string $user
+	 * @param string $password
+	 * @param string $database
 	 * @return void
+	 * @throws BadConnectionException
 	 */
-	
 	public function __construct($host, $user, $password, $database)
 	{
 		$this->connection = mysqli_init();
@@ -39,8 +63,7 @@ class MySQLConnection implements DBConnection{
 	 * Conecta con la base de datos
 	 * @return void
 	 * @throws BadConnectionException
-	 */
-	
+	 */	
 	private function defaultConnection()
 	{
 		if(is_null($this->connection)) {
@@ -58,9 +81,9 @@ class MySQLConnection implements DBConnection{
 	
 	/**
 	 * Verifica si la conexion esta activa
-	 * @return void
-	 */
-	
+	 * @return MySQLConnection Este método se puede encadenar
+	 * @throws BadConnectionException
+	 */	
 	public function checkConnection()
 	{
 		if (!$this->connected)
@@ -86,16 +109,21 @@ class MySQLConnection implements DBConnection{
 	/**
 	 * Devuelve el recurso de conexión actual
 	 * @return mysqli
-	 */
-	
+	 */	
 	public function getConnection()
 	{
 		return $this->connection;
 	}
 	
+	/**
+	 * Devuelve el manejador de la base de datos
+	 * @return MySQLManager
+	 */
 	public function getManager()
 	{
 		return new MySQLManager($this);
 	}
 	
 }
+
+// Fin del archivo

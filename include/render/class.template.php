@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Manejador de plantillas
+ * @brief Manejador de plantillas
  *
  * @author Andrés Javier López <ajavier.lopez@gmail.com>
  * @copyright Klan Estudio (www.klanestudio.com) - GNU Lesser General Public License
@@ -63,7 +63,7 @@ class Template
 	}
 
 	/**
-	 * Modifica la plantilla seleccionada
+	 * Asigna la plantilla seleccionada
 	 * @param string $template
 	 * @param boolean $page Determina si la plantilla es una página, por defecto es falsa
 	 * @return void
@@ -102,7 +102,7 @@ class Template
 	}
 
 	/**
-	 * Modifica las variables que serán agregadas a la plantilla
+	 * Asigna las variables que serán agregadas a la plantilla
 	 * @param array $vars
 	 * @return void
 	 */
@@ -116,7 +116,7 @@ class Template
 	/**
 	 * Devuelve el contenido de la plantilla despues de procesarlo
 	 * @return string
-	 * @throws TemplateException
+	 * @throws RenderException
 	 */
 	public function show()
 	{
@@ -132,7 +132,7 @@ class Template
 	/**
 	 * Lee el archivo de plantilla
 	 * @return void
-	 * @throws TemplateException
+	 * @throws RenderException
 	 */
 	private function readTemplate()
 	{
@@ -191,6 +191,7 @@ class Template
 	/**
 	 * Agrega una ruta de directorio al sistema de plantillas
 	 * @param string $dir
+	 * @return void
 	 */
 	public static function addDir($dir) {
 		assert('is_array(self::$dir)');
@@ -203,7 +204,8 @@ class Template
 	 * @param array $vars
 	 * @param boolean $page Determina si la plantilla es una página, por defecto es falso
 	 * @return string
-	 * @throws TemplateException
+	 * @throws TemplateNotFoundException
+	 * @throws RenderException
 	 */
 	public static function load($template, $vars = array(), $page = false)
 	{

@@ -2,11 +2,15 @@
 
 /**
  * @defgroup MoonDragon MoonDragon PHP
+ * @brief Módulo central del framework
  *
  * @author Andrés Javier López <ajavier.lopez@gmail.com>
  * @copyright Klan Estudio (www.klanestudio.com) - GNU Lesser General Public License
- * @date Oct 2012
- * @version 4.0 b2
+ * 
+ * @exception MoonDragonException Excepción general del sistema
+ * @exception Status404Exception Excepción para procesar errores 404
+ * @exception HeadersException Excepción para procesos de header
+ * @exception RequestException Excepción para variables recibidas por POST o GET
  */
 
 if(!defined('MOONDRAGON_PATH')) {

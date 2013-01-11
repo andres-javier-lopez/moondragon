@@ -1,10 +1,22 @@
 <?php
 
 /**
- * @defgroup Database Módulo para manejo de bases de datos
+ * @defgroup Database Database
+ * @brief Módulo para manejo de bases de datos
  * @author Andrés Javier López <ajavier.lopez@gmail.com>
  * @copyright Klan Estudio (www.klanestudio.com) - GNU Lesser General Public License 
  * @ingroup MoonDragon
+ * 
+ * @exception DatabaseException Excepción general de base de datos
+ * @exception BadConnectionException Error de conexión
+ * @exception QueryException Error en la consulta a la base de datos
+ * @exception StatementException Error durante una sentencia preparada
+ * @exception EmptyResultException La consulta no devolvió resultados
+ * @exception ModelException Error en un proceso básico del modelo
+ * @exception ReadException Error durante una consulta de lectura
+ * @exception CreateException Error durante una consulta de inserción
+ * @exception UpdateException Error durante una consulta de actualización
+ * @exception DeleteException Error durante una consulta de eliminación
  */
 
 if(!defined('MOONDRAGON_PATH')) {

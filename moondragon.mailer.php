@@ -1,10 +1,15 @@
 <?php
 
 /**
- * @defgroup Mailer Módulo para manejo de correos electrónicos
+ * @defgroup Mailer Mailer
+ * @brief Módulo para manejo de correos electrónicos
  * @author Andrés Javier López <ajavier.lopez@gmail.com>
  * @copyright Klan Estudio (www.klanestudio.com) - GNU Lesser General Public License
  * @ingroup MoonDragon
+ * 
+ * @exception MailerException Excepción general del módulo
+ * @exception MailConfException Excepción durante la configuración del envío de correos
+ * @exception MailSendException Excepción durante el envío del correo electrónico
  */
 
 if(!defined('MOONDRAGON_PATH')) {

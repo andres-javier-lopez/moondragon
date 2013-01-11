@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Clase para el manejo de sesiones
+ * @brief Clase para el manejo de sesiones
  * 
  * @author Andrés Javier López <ajavier.lopez@gmail.com>
  * @author Noé Francisco Martínez  <noe.martinez@itca.edu.sv>
@@ -18,7 +18,8 @@ class Session
 	private static $app_id;
 	
 	/**
-	 * Inicializa la sesión
+	 * Inicializa la sesión segun el identificador
+	 * @param string $app_id 
 	 * @return void
 	 */
 	public static function init($app_id = '')

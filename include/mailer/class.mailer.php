@@ -2,9 +2,9 @@
 
 
 /**
- * Clase para envío de correo electrónico
+ * @brief Clase para envío de correo electrónico
+ * 
  * Basado en PHPMailer
- *
  * @author Andrés Javier López <ajavier.lopez@gmail.com>
  * @copyright Klan Estudio (www.klanestudio.com) - GNU Lesser General Public License
  * @ingroup Mailer
@@ -50,7 +50,7 @@ class Mailer
 	
 	/**
 	 * Agrega las direcciones de los remitentes
-	 * @param string|array $address puede ser un string o un array
+	 * @param string|array $address puede ser una dirección única o un arreglo de direcciones
 	 * @param PHPMailer $mail
 	 * @return void
 	 * @throws MailConfException
@@ -180,6 +180,9 @@ class Mailer
 
 	/**
 	 * Configura los parámetros del sistema
+	 * 
+	 * @todo Agregar lista de valores de configuración
+	 * @see url de lista de valores de configuración aquí
 	 * @param string $name
 	 * @param string $value
 	 * @return void
@@ -194,10 +197,10 @@ class Mailer
 	 * Envía el correo electrónico con los parámetros configurados en el sistema
 	 * @param string $subject
 	 * @param string $body
-	 * @param string|array $address puede ser un array o una string
+	 * @param string|array $address puede ser una dirección única o un arreglo de direcciones
 	 * @return void
 	 * @throws MailConfException
-	 * @throws MailerException
+	 * @throws MailSendException
 	 */
 	
 	public static function sendMail( $subject, $body, $address = '' )
@@ -225,7 +228,7 @@ class Mailer
 		}
 		catch(phpmailerException $e)
 		{
-			throw new MailerException($e->getMessage());
+			throw new MailSendException($e->getMessage());
 		}
 	}
 
