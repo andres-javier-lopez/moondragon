@@ -3,7 +3,6 @@
 /**
  * @brief Clase para manejo de procesos
  *
- * @todo agregar nueva función para obtener parámetros
  * @author Andrés Javier López <ajavier.lopez@gmail.com>
  * @copyright Klan Estudio (www.klanestudio.com) - GNU Lesser General Public License
  * @ingroup Manager
@@ -179,6 +178,21 @@ abstract class Manager implements Runnable{
 		else {
 			return '';
 		}
+	}
+	
+	/**
+	 * Obtiene el parámetro recibido en la URL en la posición específica
+	 * @param int $id
+	 * @return string
+	 */
+	protected function getParam($id) {
+		if(isset($this->call[$id])) {
+			$param = $this->call[$id];
+		}
+		else {
+			$param = '';
+		}
+		return $param;
 	}
 }
 
