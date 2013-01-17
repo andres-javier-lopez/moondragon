@@ -1,9 +1,17 @@
 <?php
 
-/// Excepciones del módulo render
-/// @ingroup Render
+/**
+ * @brief Excepción general del módulo
+ * 
+ * Indica principalmente errores de configuración
+ */
 class RenderException extends MoonDragonException {}
 
-/// Excepción de plantilla no encontrada
-/// @ingroup Render
+/**
+ * @brief Plantilla no encontrada
+ * 
+ * La plantilla solicitada al módulo no se encuentra en el directorio de plantillas proporcionado.
+ */
 class TemplateNotFoundException extends RenderException {}
+
+// Fin del archivo

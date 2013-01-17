@@ -1,15 +1,21 @@
-<<?php
+<?php
 
 /**
- * Clase para procesar datos en JSON
+ * @brief Clase para procesar datos en JSON
  *
  * @author Andrés Javier López <ajavier.lopez@gmail.com>
  * @copyright Klan Estudio (www.klanestudio.com) - GNU Lesser General Public License
  * @ingroup Caller
  */
 
-
 class Json {
+
+	/**
+	 * Decodifica una cadena de JSON y captura los errores durante la decodificación
+	 * @param string $json_data
+	 * @return array
+	 * @throws JsonException
+	 */
 	public static function decode($json_data) {
 		$data = json_decode($json_data);
 		if($data === false || is_null($data)) {
@@ -35,3 +41,5 @@ class Json {
 		return $data;
 	}
 }
+
+// Fin del archivo

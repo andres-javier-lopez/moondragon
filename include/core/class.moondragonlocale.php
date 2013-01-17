@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Clase de Localizacion de idiomas
+ * @brief Clase de Localizacion de idiomas
  *
  * @author Andrés Javier López <ajavier.lopez@gmail.com>
  * @copyright Klan Estudio (www.klanestudio.com) - GNU Lesser General Public License
@@ -10,6 +10,12 @@
 
 class MoonDragonLocale
 {
+	/**
+	 * Inicializa los valores de configuración de la localización
+	 * @param string $locale
+	 * @param string $path
+	 * @return void
+	 */
 	public static function init($locale = 'es_SV', $path = './locale') {
 		putenv("LANG=$locale.utf-8");
 		setlocale(LC_ALL, "$locale.utf-8");
@@ -35,3 +41,5 @@ if(!function_exists('gettext')) {
 }
 
 assert('function_exists("_")');
+
+// Fin de archivo

@@ -1,10 +1,15 @@
 <?php
 
 /**
- * @defgroup Manager Módulo para manejo de procesos
+ * @defgroup Manager Manager
+ * @brief Módulo para manejo de procesos
  * @author Andrés Javier López <ajavier.lopez@gmail.com>
  * @copyright Klan Estudio (www.klanestudio.com) - GNU Lesser General Public License
  * @ingroup MoonDragon
+ * 
+ * @exception ManagerException Excepción general del módulo
+ * @exception TaskException Error 404 por tareas no encontradas
+ * @exception RouteException Error 404 por rutas no encontradas
  */
 
 if(!defined('MOONDRAGON_PATH')) {

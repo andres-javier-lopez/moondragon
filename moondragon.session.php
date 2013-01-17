@@ -1,7 +1,8 @@
 <?php
 
 /**
- * @defgroup Session Módulo para manejo de sesiones
+ * @defgroup Session Session
+ * @brief Módulo para manejo de sesiones
  * @author Andrés Javier López <ajavier.lopez@gmail.com>
  * @copyright Klan Estudio (www.klanestudio.com) - GNU Lesser General Public License
  * @ingroup MoonDragon
@@ -18,5 +19,3 @@ require_once 'moondragon.core.php';
 
 
 require_once 'include/session/class.session.php';
-
-Session::init();

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Clase estática para obtener variables REQUEST
+ * @brief Clase estática para obtener variables REQUEST
  *
  * @author Andrés Javier López <ajavier.lopez@gmail.com>
  * @copyright Klan Estudio (www.klanestudio.com) - GNU Lesser General Public License
@@ -13,13 +13,14 @@ class Request
 {
 	/**
 	 * Variable que controla el modo de pruebas
-	 * @var boolean
+	 * @var boolean $test_mode
 	 */
 	public static $test_mode = false;
 	
 	/**
 	 * Valores de prueba para el sistema
-	 * @var array
+	 * @var array $test_values
+	 * 
 	 */
 	public static $test_values = array();
 	
@@ -79,7 +80,7 @@ class Request
 	}
 	
 	/**
-	 * Devuelve la variable GET indicada o la variable de PATH_INFO
+	 * Devuelve la variable GET indicada
 	 * @param string $id
 	 * @param boolean $filter determina si el resultado se filtra contra XSS, por defecto falso
 	 * @return string
@@ -125,7 +126,7 @@ class Request
 	}
 	
 	/**
-	 * Devuelve la variable GET indicada o la variable de PATH_INFO, o la variable alternativa si no existe
+	 * Devuelve la variable GET indicada o la variable alternativa si no existe
 	 * @param string $id
 	 * @param string $alt variable alternativa
 	 * @param boolean $filter determina si el resultado se filtra contra XSS, por defecto falso
@@ -172,7 +173,7 @@ class Request
 	}
 	
 	/**
-	 * Devuelve la variable que sea de POST, GET o PATH_INFO
+	 * Devuelve la variable que sea de POST o GET
 	 * @param string $id
 	 * @param boolean $filter determina si el resultado se filtra contra XSS, por defecto falso
 	 * @return string
@@ -218,7 +219,7 @@ class Request
 	}
 	
 	/**
-	 * Devuelve la variable que sea de POST, GET o PATH_INFO, o la variable alternativa si no existe
+	 * Devuelve la variable que sea de POST o GET, o la variable alternativa si no existe
 	 * @param string $id
 	 * @param string $alt variable alternativa
 	 * @param boolean $filter determina si el resultado se filtra contra XSS, por defecto falso
@@ -265,7 +266,10 @@ class Request
 	}
 	
 	/**
-	 * Funcion de pruebas 
+	 * Funcion que devuelve valores de prueba
+	 * @param string $id
+	 * @param string $alt
+	 * @return string 
 	 */
 	
 	private static function getTestValue($id, $alt = NULL) {
@@ -287,15 +291,25 @@ class Request
 	 */
 	private static function filterXSS($data)
 	{
-		$data = str_replace('&', '&amp;', $data);
-		$data = str_replace('#', '&#35;', $data);
-		$data = str_replace('<', '&lt;', $data);
-		$data = str_replace('>', '&gt;', $data);
-		$data = str_replace('(', '&#40;', $data);
-		$data = str_replace(')', '&#41;', $data);
-		$data = str_replace('"', '&quot;', $data);
-		$data = str_replace("'", '&#39;', $data);
+		if(is_array($data)) {
+			foreach($data as $key => $dat) {
+				$data[$key] = self::filterXSS($dat);
+			}
+		}
+		else {
+			$data = str_replace('&', '&amp;', $data);
+			$data = str_replace('#', '&#35;', $data);
+			$data = str_replace('<', '&lt;', $data);
+			$data = str_replace('>', '&gt;', $data);
+			$data = str_replace('(', '&#40;', $data);
+			$data = str_replace(')', '&#41;', $data);
+			$data = str_replace('"', '&quot;', $data);
+			$data = str_replace("'", '&#39;', $data);
+		}
 	
 		return $data;
 	}
 }
+
+// Fin de archivo
+

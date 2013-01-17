@@ -1,12 +1,23 @@
 <?php
 
-/// Excepción general de MoonDragon
-/// @ingroup MoonDragon
+/**
+ * @brief Excepción general del sistema
+ * 
+ * Todas las excepciones pertenecientes a MoonDragon son derivadas de esta
+ */
 class MoonDragonException extends Exception {}
 
-/// Excepción para procesar errores 404
-/// @ingroup MoonDragon
+
+/**
+ * @brief Excepción para procesar errores 404
+ * 
+ * Es manejada automáticamente por el sistema para mostrar la página de error
+ */
 class Status404Exception extends MoonDragonException {
+	/**
+	 * Muestra la pantalla de error 404
+	 * @return void
+	 */
 	public function show404() {
 		if(!headers_sent()) {
 			if(function_exists('http_response_code')) {
@@ -33,10 +44,18 @@ class Status404Exception extends MoonDragonException {
 	}	
 }
 
-/// Excepción para procesos de Header
-/// @ingroup MoonDragon
+/**
+ * @brief Excepción para procesos de header
+ * 
+ * Indica un error en la configuración de las cabeceras
+ */
 class HeadersException extends MoonDragonException {}
 
-/// Excepción para variables en request
-/// @ingroup MoonDragon
+/**
+ * @brief Excepción para variables recibidas por POST o GET
+ * 
+ * Este error indica que la variable que se quizo obtener no fue recibida
+ */
 class RequestException extends MoonDragonException {}
+
+// Fin del archivo

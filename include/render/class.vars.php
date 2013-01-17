@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Almacenamiento de variables globales del sistema
+ * @brief Almacenamiento de variables globales del sistema
  * 
  * @author Andrés Javier López <ajavier.lopez@gmail.com>
  * @copyright Klan Estudio (www.klanestudio.com) - GNU Lesser General Public License
@@ -19,10 +19,9 @@ class Vars
 	/**
 	 * Modifica una variable global
 	 * @param string $name
-	 * @param string $value
+	 * @param mixed $value
 	 * @return void
 	 */
-	
 	public static function set( $name, $value )
 	{
 		self::$vars[$name] = $value;
@@ -33,7 +32,6 @@ class Vars
 	 * @param string $name
 	 * @return mixed
 	 */
-	
 	public static function get( $name )
 	{
 		return self::$vars[$name];
@@ -43,7 +41,6 @@ class Vars
    	 * Devuelve todas las variables globales
    	 * @return array
    	 */
-   	
    	public static function getVars()
    	{
    		return self::$vars;

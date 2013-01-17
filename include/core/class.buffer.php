@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Maneja un arreglo de buffers de salida
+ * @brief Maneja un arreglo de buffers de salida
  *
  * @author Andrés Javier López <ajavier.lopez@gmail.com>
  * @copyright Klan Estudio (www.klanestudio.com) - GNU Lesser General Public License
