@@ -187,36 +187,6 @@ interface DBResult extends Iterator
 	 * @throws EmptyResultException
 	 */
 	public function numRows();
-	
-	/**
-	 * Implementación de Iterator
-	 * @return void
-	 */
-	public function rewind();
-	
-	/**
-	 * Implementación de Iterator
-	 * @return int | string
-	 */
-	public function key();	
-	
-	/**
-	 * Implementación de Iterator
-	 * @return mixed
-	 */
-	public function current();
-	
-	/**
-	 * Implementación de Iterator
-	 * @return void
-	 */
-	public function next();
-	
-	/**
-	 * Implementación de Iterator
-	 * @return boolean
-	 */
-	public function valid();
 }
 
 /**
