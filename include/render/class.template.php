@@ -4,11 +4,13 @@
  * Manejador de plantillas
  *
  * @author Andrés Javier López <ajavier.lopez@gmail.com>
+ * @author Noé Francisco Martínez Merino <noe.martinez@itca.edu.sv>
  * @copyright Klan Estudio (www.klanestudio.com) - GNU Lesser General Public License
  * @ingroup Render
+ * 
  */
-
-class Template
+            
+class Template 
 {
 	/**
 	 * Ruta de directorios para plantillas
