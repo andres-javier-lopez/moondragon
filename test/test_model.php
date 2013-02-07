@@ -8,12 +8,14 @@ $config['fields'] = array('name#s', 'val' => 'value');
 $config['relations'] = array('table2.id_table2', 'otra_tabla' => 'table3.id_table3');
 $config['joins'] = array('table2' => array('name2', 'val1' => 'value'), 'table3' => array('value'));
 
+ModelLoader::addModel('test', $config);
+
 // Init connection
 Database::connect('mysql', 'localhost', 'root', '', 'test');
 $db = Database::getManager();
 
 // Instance Model
-$model = $db->getModel($config);
+$model = ModelLoader::getModel('test');
 
 $dataset = $model->getDataset();
 $dataset->name = 'prueba';

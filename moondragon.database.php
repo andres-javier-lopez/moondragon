@@ -37,3 +37,4 @@ require_once 'include/database/class.foreigntable.php';
 require_once 'include/database/class.dataset.php';
 require_once 'include/database/class.reader.php';
 require_once 'include/database/class.model.php';
+require_once 'include/database/class.modelloader.php';
