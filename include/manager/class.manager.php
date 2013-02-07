@@ -142,7 +142,7 @@ abstract class Manager implements Runnable{
 					}
 				}
 				else {
-					throw new ManagerException();
+					throw new ManagerException(_("La url del manager no es la correcta: ").$this->manager_url);
 				}
 			}
 		}
