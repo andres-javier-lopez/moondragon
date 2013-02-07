@@ -16,8 +16,8 @@ class Json {
 	 * @return array
 	 * @throws JsonException
 	 */
-	public static function decode($json_data) {
-		$data = json_decode($json_data);
+	public static function decode($json_data, $array = false) {
+		$data = json_decode($json_data, $array);
 		if($data === false || is_null($data)) {
 			switch(json_last_error()) {
 				case JSON_ERROR_NONE: $error = _('sin errores');
@@ -34,7 +34,7 @@ class Json {
 				break;
 				default: $error = _('error desconocido');
 			}
-			throw new JsonException(_('No se pudo decodificar JSON').'('.$error.')');
+			throw new JsonException(_('No se pudo decodificar JSON').' ('.$error.')');
 		}
 		assert('$data !== false');
 		assert('!is_null($data)');
