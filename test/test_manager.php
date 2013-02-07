@@ -10,7 +10,7 @@ class Home extends Manager
      * 
      */
     public function index() {
-        echo _('¡Hola Mundo!');
+        return _('¡Hola Mundo!');
     }
     
     /**
@@ -21,7 +21,7 @@ class Home extends Manager
      */
     public function param() {
     	$prueba = Request::tryGetGET('prueba', 'vacia');
-    	echo 'La variable es '.$prueba;
+    	return 'La variable es '.$prueba;
     }
     
     /**
@@ -30,7 +30,7 @@ class Home extends Manager
      * 
      */
     public function hola() {
-    	echo 'definiendo tarea hola';
+    	return 'definiendo tarea hola';
     }
     
     /**
@@ -43,5 +43,5 @@ class Home extends Manager
     }
 }
 
-MoonDragon::run(new Home('moondragon4.0/test/test_manager.php'));
+MoonDragon::run(new Home('moondragon/test/test_manager.php'));
 

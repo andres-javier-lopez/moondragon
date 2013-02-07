@@ -64,7 +64,7 @@ abstract class Manager implements Runnable{
 	public function run() {
 		assert('$this->ready; /* Run default constructor */');
 		$task = $this->getTask();
-		$this->$task();
+		echo $this->$task();
 	}
 
 	/**
