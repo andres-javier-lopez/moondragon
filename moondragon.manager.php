@@ -24,3 +24,4 @@ require_once 'moondragon.core.php';
 require_once 'include/manager/exceptions.php';
 require_once 'include/manager/class.manager.php';
 require_once 'include/manager/class.router.php';
+require_once 'include/manager/class.jsonmanager.php';

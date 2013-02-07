@@ -64,7 +64,10 @@ abstract class Manager implements Runnable{
 	public function run() {
 		assert('$this->ready; /* Run default constructor */');
 		$task = $this->getTask();
-		echo $this->$task();
+		$response = $this->$task();
+		if(!is_null($response)) {
+			echo $this->formatResponse($response);
+		}
 	}
 
 	/**
@@ -193,6 +196,17 @@ abstract class Manager implements Runnable{
 			$param = '';
 		}
 		return $param;
+	}
+	
+	/**
+	 * Función que cambia el formato de salida de la respuesta
+	 * 
+	 * Diseñada para ser reimplementada
+	 * @var mixed $response
+	 * @return string
+	 */
+	protected function formatResponse($response) {
+		return $response;		
 	}
 }
 
