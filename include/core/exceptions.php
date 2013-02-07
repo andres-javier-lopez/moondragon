@@ -5,7 +5,20 @@
  * 
  * Todas las excepciones pertenecientes a MoonDragon son derivadas de esta
  */
-class MoonDragonException extends Exception {}
+class MoonDragonException extends Exception 
+{
+	/**
+	 * Función predefinida para manejar las excepciones no capturadas
+	 * @return void
+	 */
+	public function showException() 
+	{
+		echo '<p><strong>MoonDragonException:</strong></p>';
+		echo '<pre>';
+		echo $this;
+		echo '</pre>';
+	}
+}
 
 
 /**
@@ -41,7 +54,15 @@ class Status404Exception extends MoonDragonException {
 			echo '<h1>404 Page Not Found</h1>';
 			echo '<p>'.$this->getMessage().'</p>';
 		}
-	}	
+	}
+	
+	/**
+	 * Implementación para errores 404 no capturados
+	 * @return void
+	 */
+	public function showException() {
+		$this->show404();
+	}
 }
 
 /**

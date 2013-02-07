@@ -22,6 +22,17 @@ set_include_path(get_include_path() . PATH_SEPARATOR . MOONDRAGON_PATH);
 // Error Control
 assert_options(ASSERT_BAIL, true);
 
+// Manejo de excepciones no capturadas
+function moondragon_exception_handler($e) {
+	if($e instanceof MoonDragonException) {
+		$e->showException();
+	}
+	else {
+		echo '<pre>'.$e.'</pre>';
+	}
+}
+set_exception_handler('moondragon_exception_handler');
+
 assert('defined("MOONDRAGON_PATH")');
 assert('strpos(get_include_path(), PATH_SEPARATOR.MOONDRAGON_PATH) !== false');
 
