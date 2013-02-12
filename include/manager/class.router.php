@@ -73,9 +73,13 @@ class Router
 			if(strpos($requestURI, basename($scriptName)) !== false) {
 				$baseURI = str_replace($scriptName, '', $requestURI);
 			}
-			else {
+			else if(dirname($scriptName) != '/'){
 				$baseURI = str_replace(dirname($scriptName), '', $requestURI);
 			}
+			else {
+            	$baseURI = trim($requestURI, '/');
+            }
+
 				
 			if(strpos($baseURI, basename($scriptName)) !== false) {
 				throw new RouteException(_('La url no es válida'));
@@ -93,7 +97,7 @@ class Router
 		}
 		else {
 			list($section) = explode('/', trim($baseURI, '/'));
-			$managerURI = str_replace($baseURI, '', $requestURI).'/'.$section;
+			$managerURI = str_replace($baseURI, '', trim($requestURI, '/')).'/'.$section;
 		}
 		// agregado control adicional para borrar diagonales duplicadas
 		$managerURI = str_replace('//', '/', $managerURI);
