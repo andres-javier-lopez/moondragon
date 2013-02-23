@@ -1,13 +1,12 @@
 <?php
-
 /**
  * @brief Clase para hacer llamadas a un API RESTful
  *
  * @author Andrés Javier López <ajavier.lopez@gmail.com>
  * @copyright Klan Estudio (www.klanestudio.com) - GNU Lesser General Public License
  * @ingroup Caller
- */
-
+ */ 
+ 
 class Caller
 {
 	/**
@@ -148,30 +147,19 @@ class Caller
 				if(is_null($this->data) || is_null($this->data_type)) {
 					throw new EmptyDataException();
 				}
-				curl_setopt($curl, CURLOPT_HEADER, true);
-				curl_setopt($curl, CURLOPT_POST, true);
-				curl_setopt($curl, CURL_POSTFIELDS, $this->data);
-				curl_setopt($curl, CURLOPT_HTTPHEADER, 'Content-type: '.$this->data_type);
+				curl_setopt($curl, CURLOPT_HEADER, false);
+				curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "POST");
+				curl_setopt($curl, CURLOPT_POSTFIELDS, $this->data);
+				curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: '.$this->data_type, 'Content-Length: ' . strlen($this->data)));
 				break;
 			case PUT_CALL:
 				if(is_null($this->data) || is_null($this->data_type)) {
 					throw new EmptyDataException();
 				}
-				curl_setopt($curl, CURLOPT_HEADER, true);
+				curl_setopt($curl, CURLOPT_HEADER, false);
 				curl_setopt($curl, CURLOPT_PUT, true);
-				curl_setopt($curl, CURLOPT_HTTPHEADER, 'Content-type: '.$this->data_type);
-
-				// use a max of 256KB of RAM before going to disk
-				$fp = fopen('php://temp/maxmemory:256000', 'w');
-				if (!$fp) {
-					throw new CallerException(_('No se pudo abrir archivo temporal'));
-				}
-				fwrite($fp, $this->data);
-				fseek($fp, 0);
-
-				curl_setopt($ch, CURLOPT_BINARYTRANSFER, true);
-				curl_setopt($ch, CURLOPT_INFILE, $fp); // file pointer
-				curl_setopt($ch, CURLOPT_INFILESIZE, strlen($this->data));
+				curl_setopt($curl, CURLOPT_POSTFIELDS, $this->data);
+				curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-type: '.$this->data_type, 'Content-Length: ' . strlen($this->data)));
 				break;
 			case DELETE_CALL:
 				curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'DELETE');
