@@ -64,22 +64,15 @@ abstract class Manager implements Runnable{
 	public function run() {
 		assert('$this->ready; /* Run default constructor */');
 		$task = $this->getTask();
-		$response = $this->$task();
-		if(!is_null($response)) {
-			echo $this->formatResponse($response);
+		if(method_exists($this, $task)) {
+			$response = $this->$task();
+			if(!is_null($response)) {
+				echo $this->formatResponse($response);
+			}
 		}
-	}
-
-	/**
-	 * Si se intenta llamar una tarea que no esta definida, se dispara una excepción.
-	 * Metodo mágico.
-	 * @param string $method Nombre de la tarea
-	 * @param array $params
-	 * @return void
-	 * @throws TaskException
-	 */
-	public function __call($method, $params) {
-		throw new TaskException();
+		else {
+			throw new TaskException(_("No existe la tarea llamada"));
+		}
 	}
 
 	/**
