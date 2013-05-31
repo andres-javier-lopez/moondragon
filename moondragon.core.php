@@ -13,6 +13,8 @@
  * @exception RequestException Excepción para variables recibidas por POST o GET
  */
 
+define('MOONDRAGON_VERSION', '4e13.0');
+
 if(!defined('MOONDRAGON_PATH')) {
     define('MOONDRAGON_PATH', dirname(__FILE__));
 }

@@ -52,6 +52,38 @@ class MoonDragon
 	public static function redirect($url) {
 		self::$registry['redirection'] = $url;
 	}
+
+    /**
+     * Compara si la versión proporcionada es compatible con la versión actual
+     * @param string $version
+     * @return boolean
+     */
+    public static function checkVersion($version) {
+        if(strpos($version, '4e') !== false) {
+            $compareversion = explode( '.', str_replace('4e', '', $version));
+            $actualversion = explode('.', str_replace('4e', '', MOONDRAGON_VERSION));
+
+            if(count($compareversion) == 2 && $compareversion[0] <= $actualversion[0]) {
+                if($compareversion[0] == $actualversion[0]) {
+                    if($compareversion[1] <= $actualversion[1]) {
+                        return true;
+                    }
+                    else {
+                        return false;
+                    }
+                }
+                else {
+                    return true;
+                }
+            }
+            else {
+                return false;
+            }
+        }
+        else {
+            return false;
+        }
+    }
 }
 
 // Fin de archivo
