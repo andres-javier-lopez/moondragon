@@ -67,6 +67,7 @@ class Router
 	 */
 	public static function enroute() {
 		$requestURI = $_SERVER['REQUEST_URI'];
+		list($requestURI) = explode('?', $requestURI);
 		$scriptName = $_SERVER['SCRIPT_NAME'];
 
 		if($requestURI != '/') {
