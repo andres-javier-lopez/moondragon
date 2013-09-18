@@ -157,7 +157,7 @@ class Caller
 					throw new EmptyDataException();
 				}
 				curl_setopt($curl, CURLOPT_HEADER, false);
-				curl_setopt($curl, CURLOPT_PUT, true);
+				curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "PUT");
 				curl_setopt($curl, CURLOPT_POSTFIELDS, $this->data);
 				curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-type: '.$this->data_type, 'Content-Length: ' . strlen($this->data)));
 				break;
