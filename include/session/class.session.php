@@ -72,14 +72,38 @@ class Session
 	 */
 	public static function set( $var , $value )
 	{
-		$_SESSION[$var.'_'.self::$app_id] = $value;
-		if(!in_array($var.'_'.self::$app_id, $_SESSION['X_sess_'.self::$app_id.'_list']))
+		if($value === NULL)
 		{
-			$_SESSION['X_sess_'.self::$app_id.'_list'][] = $var.'_'.self::$app_id;
+			self::del($var);
 		}
-		assert('in_array($var."_".self::$app_id, $_SESSION["X_sess_".self::$app_id."_list"])');
-		assert('isset($_SESSION[$var."_".self::$app_id])');
+		else
+		{
+			$_SESSION[$var.'_'.self::$app_id] = $value;
+			if(!in_array($var.'_'.self::$app_id, $_SESSION['X_sess_'.self::$app_id.'_list']))
+			{
+				$_SESSION['X_sess_'.self::$app_id.'_list'][] = $var.'_'.self::$app_id;
+			}
+			assert('in_array($var."_".self::$app_id, $_SESSION["X_sess_".self::$app_id."_list"])');
+			assert('isset($_SESSION[$var."_".self::$app_id])');
+		}
 	}
+	
+	/**
+	 * Desasigna una variable de sesión
+	 * @param string $var
+	 * @return void
+	 */
+	 public static function del($var)
+	 {
+	 	unset($_SESSION[$var.'_'.self::$app_id]);
+		$key = array_search($var.'_'.self::$app_id, $_SESSION['X_sess_'.self::$app_id.'_list']);
+		if($key !== false) 
+		{
+			unset($_SESSION['X_sess_'.self::$app_id.'_list'][$key]);
+		}
+		assert('!isset($_SESSION[$var."_".self::$app_id])');
+		assert('!in_array($var."_".self::$app_id, $_SESSION["X_sess_".self::$app_id."_list"])');
+	 }
 
 	/**
 	 * Limpia todas las variables de sesión para la aplicación
