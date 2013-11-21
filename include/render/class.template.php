@@ -1,16 +1,16 @@
 <?php
 
 /**
- * Manejador de plantillas
+ * @brief Manejador de plantillas
  *
  * @author Andrés Javier López <ajavier.lopez@gmail.com>
- * @copyright TuApp.net - GNU Lesser General Public License
- * @date Feb 2012
- * @version 3.2
- * @ingroup Core
+ * @author Noé Francisco Martínez Merino <noe.martinez@itca.edu.sv>
+ * @copyright Klan Estudio (www.klanestudio.com) - GNU Lesser General Public License
+ * @ingroup Render
+ * 
  */
-
-class Template
+            
+class Template 
 {
 	/**
 	 * Ruta de directorios para plantillas
@@ -48,10 +48,10 @@ class Template
 	 * @param boolean $page Determina si la plantilla es una página, por defecto es falso
 	 * @return void
 	 */
-	public function __construct( $template = '')
+	public function __construct( $template = '', $page = false )
 	{
 		if($template != '') {
-			$this->setTemplate( $template );
+			$this->setTemplate( $template, $page );
 		}
 	}
 
@@ -65,12 +65,12 @@ class Template
 	}
 
 	/**
-	 * Modifica la plantilla seleccionada
+	 * Asigna la plantilla seleccionada
 	 * @param string $template
 	 * @param boolean $page Determina si la plantilla es una página, por defecto es falsa
 	 * @return void
 	 */
-	public function setTemplate( $template )
+	public function setTemplate( $template, $page = false )
 	{
 		$found = false;
 		
@@ -96,25 +96,29 @@ class Template
 			$this->page = true;
 		}
 		else {
-			$this->page = false;
+			$this->page = $page;
 		}
 		$this->content = '';
+		
+		return $this;
 	}
 
 	/**
-	 * Modifica las variables que serán agregadas a la plantilla
+	 * Asigna las variables que serán agregadas a la plantilla
 	 * @param array $vars
 	 * @return void
 	 */
 	public function setVars( $vars )
 	{
 		$this->vars = $vars;
+		
+		return $this;
 	}
 
 	/**
 	 * Devuelve el contenido de la plantilla despues de procesarlo
 	 * @return string
-	 * @throws TemplateException
+	 * @throws RenderException
 	 */
 	public function show()
 	{
@@ -130,20 +134,26 @@ class Template
 	/**
 	 * Lee el archivo de plantilla
 	 * @return void
-	 * @throws TemplateException
+	 * @throws RenderException
 	 */
 	private function readTemplate()
 	{
 		assert('file_exists($this->template)');
-		$file_data = fopen($this->template, 'r');
-		if ( !$file_data )
-		{
+		if(filesize($this->template) == 0) {
 			$this->content = '';
-			throw new RenderException( _('No se pudo leer la plantilla') );
 		}
-
-		$this->content = fread( $file_data, filesize( $this->template ) );
-		fclose( $file_data );
+		else {
+			assert('filesize($this->template) > 0');
+			$file_data = fopen($this->template, 'r');
+			if ( !$file_data )
+			{
+				$this->content = '';
+				throw new RenderException( _('No se pudo leer la plantilla') );
+			}
+	
+			$this->content = fread( $file_data, filesize( $this->template ) );
+			fclose( $file_data );
+		}
 	}
 
 	/**
@@ -183,6 +193,7 @@ class Template
 	/**
 	 * Agrega una ruta de directorio al sistema de plantillas
 	 * @param string $dir
+	 * @return void
 	 */
 	public static function addDir($dir) {
 		assert('is_array(self::$dir)');
@@ -195,14 +206,14 @@ class Template
 	 * @param array $vars
 	 * @param boolean $page Determina si la plantilla es una página, por defecto es falso
 	 * @return string
-	 * @throws TemplateException
+	 * @throws TemplateNotFoundException
+	 * @throws RenderException
 	 */
-	public static function load( $template, $vars = array())
+	public static function load($template, $vars = array(), $page = false)
 	{
-		$tpl = new self( $template );
-		$vars_array = array_merge(  Vars::getVars(), $vars );
-		$tpl->setVars( $vars_array );
-		return $tpl->show();
+		$tpl = new self($template, $page);
+		$vars_array = array_merge(Vars::getVars(), $vars);
+		return $tpl->setVars($vars_array)->show();
 	}
 }
 
